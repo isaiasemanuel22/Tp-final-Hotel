@@ -25,25 +25,55 @@ public class Menu {
 
         acceso = userService.traerUsuario(userName);
         if(acceso != 0 ){
-            switch (acceso){
-                case 1: administrador(userName);
+            switch (acceso) {
+                case 1 -> {
+                    administrador(userName);
+                }
+                case 2 -> {
+                    recepcionista(userName);
 
-                case 2: recepcionista(userName);
+                }
+                case 3 -> {
+                    usuario(userName);
 
-                case 3: usuario(userName);
+                }
             }
         }
 
     }
 
-    public void administrador(String username){
+    private void administrador(String username){
+        System.out.println("ADMINISTRADOR");
+        System.out.println("Bienvenido " + username);
+
+        System.out.println("Crear Administrador > 1");
+        System.out.println("Agregar recepcionista > 2");
+        System.out.println("Agregar Conserje > 3");
+        System.out.println("Dar permiso recepcionista > 4");
+        System.out.println("Dar permiso conserje > 5 ");
 
     }
 
-    public void recepcionista(String username){
+    private void recepcionista(String username){
+        System.out.println("RECEPCINISTA");
+        System.out.println("Bienvenido " + username);
+
+        System.out.println("Crear Administrador > 1");
+        System.out.println("Agregar recepcionista > 2");
+        System.out.println("Agregar Conserje > 3");
+        System.out.println("Dar permiso recepcionista > 4");
+        System.out.println("Dar permiso conserje > 5 ");
 
     }
-    public void usuario(String username){
+    private void usuario(String username){
+        System.out.println("USUARIO");
+        System.out.println("Bienvenido " + username);
+
+        System.out.println("Crear Administrador > 1");
+        System.out.println("Agregar recepcionista > 2");
+        System.out.println("Agregar Conserje > 3");
+        System.out.println("Dar permiso recepcionista > 4");
+        System.out.println("Dar permiso conserje > 5 ");
 
     }
 }
