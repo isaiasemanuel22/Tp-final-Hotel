@@ -1,15 +1,13 @@
 package com.company.models;
 
-public class Receptionist extends User{
+public class Receptionist {
     private int salary;
     private String turn;
+    private User user;
 
-    public Receptionist() {
-        super();
-    }
 
-    public Receptionist(int ID, String name, String lastName, String DNI, String adress, String phone, String email, String genre, String userId, String password, int salary, String turn) {
-        super(ID, name, lastName, DNI, adress, phone, email, genre, userId, password);
+    public Receptionist(int salary, String turn,User user) {
+        this.user = user;
         this.salary = salary;
         this.turn = turn;
     }

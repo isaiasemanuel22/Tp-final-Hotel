@@ -1,8 +1,9 @@
 package com.company.models;
 
-public abstract class User extends Person{
+public class User extends Person{
     private String userId;
     private String password;
+    private String tipoUsuario;
 
     public User(){
         super();
