@@ -1,7 +1,10 @@
 package com.company.controller;
 
+import com.company.models.User;
 import com.company.services.UserService;
 
+import javax.jws.soap.SOAPBinding;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Menu {
@@ -51,6 +54,9 @@ public class Menu {
         System.out.println("Agregar Conserje > 3");
         System.out.println("Dar permiso recepcionista > 4");
         System.out.println("Dar permiso conserje > 5 ");
+        System.out.println("Buscar Usuario > 6 ");
+        System.out.println("Modificar Usuario > 7 ");
+        System.out.println("Mostrar Usuarios > 7 ");
 
     }
 
@@ -76,4 +82,9 @@ public class Menu {
         System.out.println("Dar permiso conserje > 5 ");
 
     }
+
+    public void showUsers(){
+
+    }
+
 }

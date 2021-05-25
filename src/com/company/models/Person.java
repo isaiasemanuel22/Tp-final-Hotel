@@ -16,7 +16,7 @@ public abstract class Person {
         this.ID=uniqueID;
     }
 
-    public Person(int ID, String name, String lastName, String DNI, String adress, String phone, String email, String genre) {
+    public Person(String name, String lastName, String DNI, String adress, String phone, String email, String genre) {
         uniqueID++;
         this.ID=uniqueID;
         this.name = name;
