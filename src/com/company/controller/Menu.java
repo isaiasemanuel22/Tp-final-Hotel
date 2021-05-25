@@ -45,12 +45,12 @@ public class Menu {
     private void administrador(String username){
         System.out.println("ADMINISTRADOR");
         System.out.println("Bienvenido " + username);
-
         System.out.println("Crear Administrador > 1");
         System.out.println("Agregar recepcionista > 2");
         System.out.println("Agregar Conserje > 3");
         System.out.println("Dar permiso recepcionista > 4");
         System.out.println("Dar permiso conserje > 5 ");
+
 
     }
 

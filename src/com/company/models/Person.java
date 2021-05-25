@@ -2,7 +2,7 @@ package com.company.models;
 
 public abstract class Person {
     private static int uniqueID=0;
-    private int ID;
+    private long ID;
     private String name;
     private String lastName;
     private String DNI;
@@ -16,7 +16,7 @@ public abstract class Person {
         this.ID=uniqueID;
     }
 
-    public Person(int ID, String name, String lastName, String DNI, String adress, String phone, String email, String genre) {
+    public Person(long ID, String name, String lastName, String DNI, String adress, String phone, String email, String genre) {
         uniqueID++;
         this.ID=uniqueID;
         this.name = name;
@@ -28,7 +28,7 @@ public abstract class Person {
         this.genre = genre;
     }
 
-    public int getID() {
+    public long getID() {
         return ID;
     }
 
