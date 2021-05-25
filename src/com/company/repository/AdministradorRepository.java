@@ -7,6 +7,6 @@ public class AdministradorRepository {
 
     public User crearAdministrador(){
         User newUser = new User();
-        
+
     }
 }
