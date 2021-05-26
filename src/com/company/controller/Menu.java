@@ -3,7 +3,6 @@ package com.company.controller;
 import com.company.models.User;
 import com.company.services.UserService;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.HashMap;
 import java.util.Scanner;
 

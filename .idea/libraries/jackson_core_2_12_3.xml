@@ -1,0 +1,31 @@
+<component name="libraryTable">
+  <library name="jackson-core-2.12.3">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-2.12.3.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jackson-databind-2.12.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-2.12.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jackson-annotations-2.12.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-jackson-core-2.12.3.zip!/jackson-core-jackson-core-2.12.3/docs/javadoc/1.9" />
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-jackson-core-2.12.3.zip!/jackson-core-jackson-core-2.12.3/docs/javadoc/2.0" />
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-jackson-core-2.12.3.zip!/jackson-core-jackson-core-2.12.3/docs/javadoc/2.1" />
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-jackson-core-2.12.3.zip!/jackson-core-jackson-core-2.12.3/docs/javadoc/2.10" />
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-jackson-core-2.12.3.zip!/jackson-core-jackson-core-2.12.3/docs/javadoc/2.11" />
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-jackson-core-2.12.3.zip!/jackson-core-jackson-core-2.12.3/docs/javadoc/2.11.rc1" />
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-jackson-core-2.12.3.zip!/jackson-core-jackson-core-2.12.3/docs/javadoc/2.12" />
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-jackson-core-2.12.3.zip!/jackson-core-jackson-core-2.12.3/docs/javadoc/2.2.0" />
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-jackson-core-2.12.3.zip!/jackson-core-jackson-core-2.12.3/docs/javadoc/2.3" />
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-jackson-core-2.12.3.zip!/jackson-core-jackson-core-2.12.3/docs/javadoc/2.4" />
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-jackson-core-2.12.3.zip!/jackson-core-jackson-core-2.12.3/docs/javadoc/2.5" />
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-jackson-core-2.12.3.zip!/jackson-core-jackson-core-2.12.3/docs/javadoc/2.6" />
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-jackson-core-2.12.3.zip!/jackson-core-jackson-core-2.12.3/docs/javadoc/2.7" />
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-jackson-core-2.12.3.zip!/jackson-core-jackson-core-2.12.3/docs/javadoc/2.8" />
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-jackson-core-2.12.3.zip!/jackson-core-jackson-core-2.12.3/docs/javadoc/2.9" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-jackson-core-2.12.3.zip!/jackson-core-jackson-core-2.12.3/src/main/java" />
+      <root url="jar://$USER_HOME$/Downloads/jackson-core-jackson-core-2.12.3.zip!/jackson-core-jackson-core-2.12.3/src/test/java" />
+    </SOURCES>
+  </library>
+</component>
