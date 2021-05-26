@@ -1,6 +1,9 @@
 package com.company.utils;
 
 
+import com.company.models.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,43 +35,13 @@ public class Archivos <T>{
         ArrayList<T> list = new ArrayList<T>();
         File file = new File(new File(this.url).getAbsolutePath());
         if (file.exists()) {
-            if(obj.getClass().equals(Cliente.class)){
+            if (obj.getClass().equals(User.class)) {
                 ObjectMapper mapper = new ObjectMapper();
-                list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, ClienteEmpresa.class)));
+                list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, User.class)));
 
-                ArrayList<T> aux = list;
-                for (int i = 0; i < aux.size(); i++) {
-                    ClienteEmpresa search = (ClienteEmpresa) aux.get(i);
-                    if(search.getCuit() == null){
-                        Cliente nuevo =  (Cliente) list.remove(i);
-                        list.add(i , (T) create(nuevo));
-                    }
-
-                }
-            }else if(obj.getClass().equals(Product.class)){
-
-                ObjectMapper mapper = new ObjectMapper();
-                list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Product.class)));
-
-            }else if(obj.getClass().equals(Order.class)){
-
-                ObjectMapper mapper = new ObjectMapper();
-                list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Order.class)));
             }
-
         }
-
         return list;
     }
 
-    private Cliente create (Cliente c){
-        Cliente nuevo = new Cliente();
-        nuevo.setName(c.getName());
-        nuevo.setLastname(c.getLastname());
-        nuevo.setBirth(c.getBirth());
-        nuevo.setDNI(c.getDNI());
-        nuevo.setPhoneNumber(c.getPhoneNumber());
-        return nuevo;
-
-    }
 }
