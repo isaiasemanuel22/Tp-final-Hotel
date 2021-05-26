@@ -48,7 +48,6 @@ public class Menu {
     private void administrador(String username){
         System.out.println("ADMINISTRADOR");
         System.out.println("Bienvenido " + username);
-
         System.out.println("Crear Administrador > 1");
         System.out.println("Agregar recepcionista > 2");
         System.out.println("Agregar Conserje > 3");
@@ -57,6 +56,7 @@ public class Menu {
         System.out.println("Buscar Usuario > 6 ");
         System.out.println("Modificar Usuario > 7 ");
         System.out.println("Mostrar Usuarios > 7 ");
+
 
     }
 
