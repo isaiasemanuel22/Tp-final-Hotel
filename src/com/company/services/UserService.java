@@ -2,13 +2,15 @@ package com.company.services;
 
 import com.company.models.User;
 import com.company.repository.UserRepository;
+import com.company.utils.Inputs;
 
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class UserService {
     UserRepository repository = new UserRepository();
-    HashMap<Integer, User>
+    Inputs inputs = new Inputs();
+    HashMap<Integer, User> users;
 
     public int traerUsuario(String userName){
         int acceso = 0;
@@ -25,7 +27,7 @@ public class UserService {
         return acceso;
     }
 
-    public HashMap<Integer, User> getAll(){}
+    //public HashMap<Integer, User> getAll(){}
 
     public User getUserByID(HashMap<Integer, User> users, Integer id){
         return users.get(id);
@@ -34,31 +36,31 @@ public class UserService {
     public void updateUser(User user, int option){
         switch (option){
             case 1:
-                user.setName(new Scanner(System.in).nextLine());
+                user.setName(inputs.inputString());
                 break;
             case 2:
-                user.setLastName(new Scanner(System.in).nextLine());
+                user.setLastName(inputs.inputString());
                 break;
             case 3:
-                user.setDNI(new Scanner(System.in).nextLine());
+                user.setDNI(inputs.inputString());
                 break;
             case 4:
-                user.setAdress(new Scanner(System.in).nextLine());
+                user.setAdress(inputs.inputString());
                 break;
             case 5:
-                user.setPhone(new Scanner(System.in).nextLine());
+                user.setPhone(inputs.inputString());
                 break;
             case 6:
-                user.setEmail(new Scanner(System.in).nextLine());
+                user.setEmail(inputs.inputString());
                 break;
             case 7:
-                user.setGenre(new Scanner(System.in).nextLine());
+                user.setGenre(inputs.inputString());
                 break;
             case 8:
-                user.setUserId(new Scanner(System.in).nextLine());
+                user.setUserId(inputs.inputString());
                 break;
             case 9:
-                user.setPassword(new Scanner(System.in).nextLine());
+                user.setPassword(inputs.inputString());
                 break;
         }
     }

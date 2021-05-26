@@ -1,7 +1,7 @@
 package com.company.models;
 
 public class User extends Person{
-    private long userId;
+    private String userId;
     private String password;
     private String tipoUsuario;
 
@@ -9,20 +9,15 @@ public class User extends Person{
         super();
     }
 
-<<<<<<< HEAD
     public User(String name, String lastName, String DNI, String adress, String phone, String email, String genre, String userId, String password) {
         super(name, lastName, DNI, adress, phone, email, genre);
-=======
-    public User(long ID, String name, String lastName, String DNI, String adress, String phone, String email, String genre, long userId, String password) {
-        super(ID, name, lastName, DNI, adress, phone, email, genre);
->>>>>>> 5c925de657f1f62225a6abb985166473625e0a5b
         this.userId = userId;
         this.password = password;
     }
 
-    public long getUserId() { return userId; }
+    public String getUserId() { return userId; }
 
-    public void setUserId(long userId) { this.userId = userId; }
+    public void setUserId(String userId) { this.userId = userId; }
 
     public String getPassword() { return password; }
 

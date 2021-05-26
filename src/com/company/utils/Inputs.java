@@ -58,8 +58,7 @@ public class Inputs <T>  {
      public String inputString(){
          String entrada = null;
          try {
-             String input = this.scan.nextLine();
-             entrada = input;
+             entrada = this.scan.nextLine();
          }catch (Exception e){
              this.scan.nextLine();
          }
@@ -69,8 +68,7 @@ public class Inputs <T>  {
     public Integer inputInterger(){
         Integer entrada = null;
         try {
-            Integer input = this.scan.nextInt();
-            entrada = input;
+            entrada = this.scan.nextInt();;
         }catch (Exception e){
             this.scan.nextLine();
         }

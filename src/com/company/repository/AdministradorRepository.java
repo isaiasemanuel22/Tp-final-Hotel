@@ -11,7 +11,7 @@ public class AdministradorRepository {
     public User crearAdministrador(){
         JSONObject jsonObject = new JSONObject();
         User newUser = new User
-                (       1,
+                (
                         "Isaias",
                         "Calfin",
                         "32456789",
@@ -19,7 +19,7 @@ public class AdministradorRepository {
                         "2236745133",
                         "isaias@hotmail.com",
                         "Masculino",
-                        1,
+                        "IsaiasUTN",
                         "Isaias22"
                 );
 
