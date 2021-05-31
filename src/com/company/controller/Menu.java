@@ -3,11 +3,15 @@ package com.company.controller;
 import com.company.models.User;
 import com.company.services.UserService;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class Menu {
     private  UserService userService = new UserService();
+
+    public Menu() throws IOException {
+    }
 
 
     public void initProgram(){
