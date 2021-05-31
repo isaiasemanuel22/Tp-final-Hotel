@@ -1,5 +1,6 @@
 package com.company.models;
 
+import javax.jws.soap.SOAPBinding;
 import java.time.LocalDate;
 
 public class Reservation {
@@ -8,13 +9,15 @@ public class Reservation {
     private LocalDate entryDate;
     private LocalDate departureDate;
     private Room room;
+    private User user;
 
-    public Reservation(int ID, LocalDate entryDate, LocalDate departureDate, Room room) {
+    public Reservation(int ID, LocalDate entryDate, LocalDate departureDate, Room room, User user) {
         uniqueID++;
         this.ID = uniqueID;
         this.entryDate = entryDate;
         this.departureDate = departureDate;
         this.room = room;
+        this.user = user;
     }
 
     public int getID() {
@@ -44,6 +47,10 @@ public class Reservation {
     public void setRoom(Room room) {
         this.room = room;
     }
+
+    public User getUser() { return user; }
+
+    public void setUser(User user) { this.user = user; }
 
     @Override
     public String toString() {

@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="libraries">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/jackson-annotations-2.12.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/jackson-core-2.12.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/jackson-core-2.12.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/jackson-databind-2.12.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/json-simple-1.1.1.jar!/" />
+      <root url="file://$PROJECT_DIR$/.idea/libraries" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/.idea/libraries" recursive="false" />
+  </library>
+</component>

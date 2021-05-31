@@ -2,15 +2,28 @@ package com.company.services;
 
 import com.company.models.User;
 import com.company.repository.UserRepository;
+import com.company.utils.Archivos;
 import com.company.utils.Inputs;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class UserService {
-    UserRepository repository = new UserRepository();
+    UserRepository repository;
     Inputs inputs = new Inputs();
     HashMap<Integer, User> users;
+    Archivos file;
+
+    public UserService() {
+        this.repository =  new UserRepository();
+        this.inputs = new Inputs();
+        this.users = new HashMap<>();
+        this.file = new Archivos("Users");
+    }
 
     public int traerUsuario(String userName){
         int acceso = 0;
@@ -27,9 +40,20 @@ public class UserService {
         return acceso;
     }
 
-    //public HashMap<Integer, User> getAll(){}
+    public HashMap<Long, User> getAll() throws IOException {
+        HashMap<Long, User> usersMap = new HashMap<>();
+        File file = new File(this.file.getUrl());
+        if (file.exists()) {
+            ObjectMapper mapper = new ObjectMapper();
+            ArrayList<User> usersList = this.file.read(User.class);
+            for (User aux: usersList) {
+                usersMap.put(aux.getID(), aux);
+            }
+        }
+        return usersMap;
+    }
 
-    public User getUserByID(HashMap<Integer, User> users, Integer id){
+    public User getUserByID(HashMap<Integer, User> users, Long id){
         return users.get(id);
     }
 

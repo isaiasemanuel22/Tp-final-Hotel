@@ -1,22 +1,29 @@
 package com.company.utils;
 
+import com.company.models.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Archivos <T>{
-
     private String url;
 
+    public Archivos (String fileName){//Makes a directory if it doesn't exists and gives to url the file's url
+        File directory = new File(System.getProperty("user.dir"), fileName);
 
-    public Archivos (String url){
+        if(!directory.exists() || !directory.isDirectory())
+            directory.mkdir();
 
-        this.url = "src\\main\\java\\Ejercicio4\\" + url;
+        url = directory.getAbsolutePath() + "\\" + fileName;
     }
 
-    public void save(ArrayList<T> c ){
-        File file = new File(new File(this.url).getAbsolutePath());
+    public String getUrl(){ return url; }
+
+    public void save(ArrayList<T> c){
+        File file = new File(url);
         try
         {
             ObjectMapper mapper = new ObjectMapper();
@@ -28,47 +35,12 @@ public class Archivos <T>{
     }
 
     public ArrayList<T> read(Object obj) throws IOException {
-
-        ArrayList<T> list = new ArrayList<T>();
-        File file = new File(new File(this.url).getAbsolutePath());
+        ArrayList<T> list = new ArrayList<>();
+        File file = new File(url);
         if (file.exists()) {
-            if(obj.getClass().equals(Cliente.class)){
-                ObjectMapper mapper = new ObjectMapper();
-                list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, ClienteEmpresa.class)));
-
-                ArrayList<T> aux = list;
-                for (int i = 0; i < aux.size(); i++) {
-                    ClienteEmpresa search = (ClienteEmpresa) aux.get(i);
-                    if(search.getCuit() == null){
-                        Cliente nuevo =  (Cliente) list.remove(i);
-                        list.add(i , (T) create(nuevo));
-                    }
-
-                }
-            }else if(obj.getClass().equals(Product.class)){
-
-                ObjectMapper mapper = new ObjectMapper();
-                list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Product.class)));
-
-            }else if(obj.getClass().equals(Order.class)){
-
-                ObjectMapper mapper = new ObjectMapper();
-                list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Order.class)));
-            }
-
+            ObjectMapper mapper = new ObjectMapper();
+            list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, obj.getClass())));
         }
-
         return list;
-    }
-
-    private Cliente create (Cliente c){
-        Cliente nuevo = new Cliente();
-        nuevo.setName(c.getName());
-        nuevo.setLastname(c.getLastname());
-        nuevo.setBirth(c.getBirth());
-        nuevo.setDNI(c.getDNI());
-        nuevo.setPhoneNumber(c.getPhoneNumber());
-        return nuevo;
-
     }
 }

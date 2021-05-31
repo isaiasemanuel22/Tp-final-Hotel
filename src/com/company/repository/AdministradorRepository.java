@@ -1,6 +1,7 @@
 package com.company.repository;
 
 import com.company.models.User;
+import com.company.models.UserProfile;
 import org.json.simple.JSONObject;
 
 import java.util.HashMap;
@@ -12,6 +13,7 @@ public class AdministradorRepository {
         JSONObject jsonObject = new JSONObject();
         User newUser = new User
                 (
+                        UserProfile.Administrador,
                         "Isaias",
                         "Calfin",
                         "32456789",
