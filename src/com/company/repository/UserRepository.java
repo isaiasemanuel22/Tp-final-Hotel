@@ -4,6 +4,7 @@ import com.company.models.User;
 import com.company.models.UserProfile;
 import com.company.utils.Archivos;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import org.json.simple.JSONObject;
 
 import java.io.File;
@@ -30,5 +31,13 @@ public class UserRepository{
             }
         }
         return usersMap;
+    }
+
+    public void saveAll(HashMap<Long, User> users){
+        ArrayList<User> userList = new ArrayList<>();
+        for (Long id: users.keySet()) {
+            userList.add(users.get(id));
+        }
+        file.save(userList);
     }
 }
