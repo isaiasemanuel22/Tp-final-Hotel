@@ -7,29 +7,26 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class RoomRepository {
-
     Archivos<Room> archivos = new Archivos<>("Rooms");
+    ArrayList<Room> rooms;
 
+    public  RoomRepository() throws IOException {
+        rooms =  archivos.read(Room.class);
+
+    }
     public void RoomsGenerate() throws IOException {
         ArrayList<Room> rooms = new ArrayList<>();
-        if(archivos.exists()){
-            rooms = archivos.readMany(Room.class);
-        }else{
-            for(int i = 0 ; i < 40 ; i++){
+        if (archivos.exists()) {
+            rooms = archivos.read(Room.class);
+        } else {
+            for (int i = 0; i < 40; i++) {
 
             }
         }
     }
 
-
-    public ArrayList<Room> rooms(int option , int cant){
-        ArrayList<Room> roomsNueva = new ArrayList<>();
-
-
-
-        return roomsNueva;
+    public void saveRooms(ArrayList<Room> rooms){
+        System.out.println(rooms);
+        archivos.save(rooms);
     }
-
-
-
 }

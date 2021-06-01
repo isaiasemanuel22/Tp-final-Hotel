@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class RoomTypeRepository {
-
+    private static RoomTypeRepository instance;
     private Archivos<RoomType> archivos = new Archivos<>("roomType");
     private ArrayList<RoomType> typeRooms = new ArrayList<>();
 
@@ -20,14 +20,22 @@ public class RoomTypeRepository {
             setRoomTypes(rooms);
             saveRoomsType();
         }
-        this.typeRooms = archivos.readMany(RoomType.class);
+        this.typeRooms = archivos.read(RoomType.class);
+        instance = this;
+    }
+
+    public static RoomTypeRepository getInstance() throws IOException {
+        if(instance == null){
+            instance = new RoomTypeRepository();
+        }
+        return instance;
     }
 
     public ArrayList<RoomType> getRoomTypes(){ return this.typeRooms; }
 
     public void setRoomTypes(ArrayList<RoomType> roomTypes){ this.typeRooms = roomTypes; }
 
-    public void saveRoomsType(){ archivos.saveMany(this.typeRooms); }
+    public void saveRoomsType(){ archivos.save(this.typeRooms); }
 
     private ArrayList<RoomType> createRooms(){
         ArrayList<RoomType> roomsType = new ArrayList<>();

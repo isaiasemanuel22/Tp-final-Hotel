@@ -25,7 +25,7 @@ public class Archivos <T>{
 
     public String getUrl(){ return url; }
 
-    public void saveMany(ArrayList<T> c){
+    public void save(ArrayList<T> c){
         File file = new File(url);
         try
         {
@@ -59,7 +59,7 @@ public class Archivos <T>{
         return list;
     }
 
-    public ArrayList<T> readMany(Class<T> clase ) throws IOException {
+    public ArrayList<T> read(Class<T> clase ) throws IOException {
         ArrayList<T> list = new ArrayList<>();
         File file = new File(url);
         if (file.exists()) {
