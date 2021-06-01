@@ -6,12 +6,17 @@ import com.company.repository.RoomTypeRepository;
 import com.company.services.RoomTypeService;
 import com.company.services.UserService;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class Menu {
     private  UserService userService = new UserService();
     private RoomTypeService roomTypeService = new RoomTypeService();
+
+    public Menu() throws IOException {
+    }
+
     public void initProgram(){
         roomTypeService.generateRooms();
         login();

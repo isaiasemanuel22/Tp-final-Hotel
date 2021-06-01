@@ -15,14 +15,12 @@ import java.util.Scanner;
 public class UserService {
     UserRepository repository;
     Inputs inputs = new Inputs();
-    HashMap<Integer, User> users;
-    Archivos file;
+    HashMap<Long, User> users;
 
-    public UserService() {
+    public UserService() throws IOException {
         this.repository =  new UserRepository();
         this.inputs = new Inputs();
-        this.users = new HashMap<>();
-        this.file = new Archivos("Users");
+        this.users = repository.getAll();
     }
 
     public int traerUsuario(String userName){
@@ -39,20 +37,7 @@ public class UserService {
         }
         return acceso;
     }
-
-    public HashMap<Long, User> getAll() throws IOException {
-        HashMap<Long, User> usersMap = new HashMap<>();
-        File file = new File(this.file.getUrl());
-        if (file.exists()) {
-            ObjectMapper mapper = new ObjectMapper();
-            ArrayList<User> usersList = this.file.read(User.class);
-            for (User aux: usersList) {
-                usersMap.put(aux.getID(), aux);
-            }
-        }
-        return usersMap;
-    }
-
+    
     public User getUserByID(HashMap<Integer, User> users, Long id){
         return users.get(id);
     }

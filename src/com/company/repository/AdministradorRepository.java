@@ -22,7 +22,6 @@ public class AdministradorRepository {
                         "IsaiasUTN",
                         "Isaias22"
                 );
-
         return newUser;
     }
 }
