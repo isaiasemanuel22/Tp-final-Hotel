@@ -1,6 +1,7 @@
 package com.company.repository;
 
 import com.company.models.User;
+
 import com.company.models.UserProfile;
 import java.util.HashMap;
 import java.util.Scanner;

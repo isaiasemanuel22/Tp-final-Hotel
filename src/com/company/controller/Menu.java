@@ -3,6 +3,9 @@ package com.company.controller;
 import com.company.models.User;
 import com.company.repository.UserRepository;
 import com.company.utils.Inputs;
+import com.company.repository.RoomRepository;
+import com.company.repository.RoomTypeRepository;
+import com.company.services.RoomTypeService;
 import com.company.services.UserService;
 import jdk.internal.util.xml.impl.Input;
 
@@ -12,12 +15,13 @@ import java.util.Scanner;
 
 public class Menu {
     private  UserService userService = new UserService();
+    private RoomTypeService roomTypeService = new RoomTypeService();
 
     public Menu() throws IOException {
     }
 
-
     public void initProgram(){
+        roomTypeService.generateRooms();
         login();
     }
 
@@ -25,9 +29,7 @@ public class Menu {
         System.out.print("Ingrese su nombre de usuario: ");
         String userName = new Inputs().inputString();
         System.out.print("\nIngrese su contraseña: ");
-        String passWord = new Inputs().inputString();
-
-
+        String password = new Inputs().inputString();
     }
 
     private void administrador(String username){

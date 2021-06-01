@@ -1,6 +1,5 @@
 package com.company.models;
 
-import javax.jws.soap.SOAPBinding;
 import java.time.LocalDate;
 
 public class Reservation {
