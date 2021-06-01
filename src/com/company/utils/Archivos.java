@@ -25,19 +25,7 @@ public class Archivos <T>{
 
     public String getUrl(){ return url; }
 
-    public void saveMany(ArrayList<T> c){
-        File file = new File(url);
-        try
-        {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(file , c);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void saveOne(Object c){
+    public void save(ArrayList<T> c){
         File file = new File(url);
         try
         {
@@ -50,17 +38,7 @@ public class Archivos <T>{
     }
 
 
-    public ArrayList<T> read(Object obj) throws IOException {
-        ArrayList<T> list = new ArrayList<>();
-        File file = new File(url);
-        if (file.exists()) {
-            ObjectMapper mapper = new ObjectMapper();
-            list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, obj.getClass())));
-        }
-        return list;
-    }
-
-    public ArrayList<T> readMany(Class<T> clase ) throws IOException {
+    public ArrayList<T> read(Class<T> clase ) throws IOException {
         ArrayList<T> list = new ArrayList<>();
         File file = new File(url);
         if (file.exists()) {

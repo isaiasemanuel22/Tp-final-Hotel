@@ -1,20 +1,25 @@
 package com.company.models;
 
 public class Room {
-    private Type roomType;
+    private String roomType;
     private String features;
     private int roomNumber;
-    private int floor;
 
 
-    public Room(Type roomType, String features, int roomNumber, int floor) {
+    public Room(String roomType, String features, int roomNumber) {
         this.roomType = roomType;
         this.features = features;
         this.roomNumber = roomNumber;
-        this.floor = floor;
     }
 
 
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
+    }
 
     public String getFeatures() { return features; }
 
@@ -24,17 +29,13 @@ public class Room {
 
     public void setRoomNumber(int roomNumber) { this.roomNumber = roomNumber; }
 
-    public int getFloor() { return floor; }
-
-    public void setFloor(int floor) { this.floor = floor; }
 
     @Override
     public String toString() {
         return "Room{" +
                 "roomTypeID=" + roomType +
-                ", features='" + features + '\'' +
+                ", features=" + features +
                 ", roomNumber=" + roomNumber +
-                ", floor=" + floor +
                 '}';
     }
 }

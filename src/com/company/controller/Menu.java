@@ -3,6 +3,7 @@ package com.company.controller;
 import com.company.models.User;
 import com.company.repository.RoomRepository;
 import com.company.repository.RoomTypeRepository;
+import com.company.services.RoomService;
 import com.company.services.RoomTypeService;
 import com.company.services.UserService;
 
@@ -13,12 +14,14 @@ import java.util.Scanner;
 public class Menu {
     private  UserService userService = new UserService();
     private RoomTypeService roomTypeService = new RoomTypeService();
+    private RoomService roomService = new RoomService();
 
     public Menu() throws IOException {
     }
 
     public void initProgram(){
         roomTypeService.generateRooms();
+        roomService.generateRooms();
         login();
     }
 
