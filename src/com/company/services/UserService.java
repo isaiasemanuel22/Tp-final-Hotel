@@ -72,13 +72,11 @@ public class UserService {
     }
 
     private void showUsersOnSearch(User user){
-        for (Long key: repository.getUsers().keySet()) {
-            System.out.println("\n ID: "+ repository.getUsers().get(key).getID()
-                    +"\n Name: "+ repository.getUsers().get(key).getName()
-                    +"\n Last Name: "+ repository.getUsers().get(key).getLastName()
-                    +"\n DNI: "+ repository.getUsers().get(key).getDNI()
-            );
-        }
+        System.out.println("\n ID: "+ user.getID()
+                +"\n Name: "+ user.getName()
+                +"\n Last Name: "+ user.getLastName()
+                +"\n DNI: "+ user.getDNI()
+        );
     }
 
     public void showUsers(){

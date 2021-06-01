@@ -30,11 +30,11 @@ public class UserRepository{
         return usersMap;
     }
 
-    public void saveAll(HashMap<Long, User> users){
+    public void saveAll(){
         ArrayList<User> userList = new ArrayList<>();
         for (Long id: users.keySet()) {
             userList.add(users.get(id));
         }
-        file.saveMany(userList);
+        file.save(userList);
     }
 }

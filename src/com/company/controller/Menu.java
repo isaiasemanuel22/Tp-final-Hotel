@@ -44,8 +44,6 @@ public class Menu {
         System.out.println("Buscar Usuario > 6 ");
         System.out.println("Modificar Usuario > 7 ");
         System.out.println("Mostrar Usuarios > 7 ");
-
-
     }
 
     private void recepcionista(String username){

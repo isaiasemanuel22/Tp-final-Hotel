@@ -59,15 +59,5 @@ public class Archivos <T>{
         return list;
     }
 
-    public ArrayList<T> read(Class<T> clase ) throws IOException {
-        ArrayList<T> list = new ArrayList<>();
-        File file = new File(url);
-        if (file.exists()) {
-            ObjectMapper mapper = new ObjectMapper();
-            list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class,clase )));
-        }
-        return list;
-    }
-
     public boolean exists(){ return new File(url).exists(); }
 }

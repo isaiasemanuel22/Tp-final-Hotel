@@ -1,23 +1,23 @@
 package com.company.models;
 
 public class Room {
-    private String roomType;
+    private Type roomType;
     private String features;
     private int roomNumber;
 
 
-    public Room(String roomType, String features, int roomNumber) {
+    public Room(Type roomType, String features, int roomNumber) {
         this.roomType = roomType;
         this.features = features;
         this.roomNumber = roomNumber;
     }
 
 
-    public String getRoomType() {
+    public Type getRoomType() {
         return roomType;
     }
 
-    public void setRoomType(String roomType) {
+    public void setRoomType(Type roomType) {
         this.roomType = roomType;
     }
 
