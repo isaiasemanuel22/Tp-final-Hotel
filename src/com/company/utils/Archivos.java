@@ -15,7 +15,7 @@ public class Archivos <T>{
     private String url;
 
     public Archivos (String fileName){//Makes a directory if it doesn't exists and gives to url the file's url
-        File directory = new File(System.getProperty("user.dir"), fileName);
+        File directory = new File(System.getProperty("user.dir") + "\\src\\", fileName);
 
         if(!directory.exists() || !directory.isDirectory())
             directory.mkdir();
@@ -25,7 +25,7 @@ public class Archivos <T>{
 
     public String getUrl(){ return url; }
 
-    public void save(ArrayList<T> c){
+    public void saveMany(ArrayList<T> c){
         File file = new File(url);
         try
         {
@@ -37,6 +37,19 @@ public class Archivos <T>{
         }
     }
 
+    public void saveOne(Object c){
+        File file = new File(url);
+        try
+        {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(file , c);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public ArrayList<T> read(Object obj) throws IOException {
         ArrayList<T> list = new ArrayList<>();
         File file = new File(url);
@@ -45,5 +58,24 @@ public class Archivos <T>{
             list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, obj.getClass())));
         }
         return list;
+    }
+
+    public ArrayList<T> readMany(Class<T> clase ) throws IOException {
+        ArrayList<T> list = new ArrayList<>();
+        File file = new File(url);
+        if (file.exists()) {
+            ObjectMapper mapper = new ObjectMapper();
+            list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class,clase )));
+        }
+        return list;
+    }
+
+    public boolean existFile(){
+        File file = new File(url);
+        boolean exist = false;
+        if(file.exists()){
+            exist = true;
+        }
+        return exist;
     }
 }

@@ -1,6 +1,9 @@
 package com.company.controller;
 
 import com.company.models.User;
+import com.company.repository.RoomRepository;
+import com.company.repository.RoomTypeRepository;
+import com.company.services.RoomTypeService;
 import com.company.services.UserService;
 
 import java.util.HashMap;
@@ -8,13 +11,14 @@ import java.util.Scanner;
 
 public class Menu {
     private  UserService userService = new UserService();
-
-
+    private RoomTypeService roomTypeService = new RoomTypeService();
     public void initProgram(){
+        roomTypeService.generateRooms();
         login();
     }
 
     public void login(){
+
         System.out.println("Ingrese su nombre de usuario");
         Scanner write = new Scanner(System.in);
         String userName = null;
