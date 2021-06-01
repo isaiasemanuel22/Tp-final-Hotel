@@ -5,6 +5,8 @@ public class Room {
     private String features;
     private int roomNumber;
 
+    public Room() {
+    }
 
     public Room(String roomType, String features, int roomNumber) {
         this.roomType = roomType;
@@ -37,5 +39,15 @@ public class Room {
                 ", features=" + features +
                 ", roomNumber=" + roomNumber +
                 '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(this.roomNumber);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }
