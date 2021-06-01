@@ -49,7 +49,6 @@ public class Archivos <T>{
         }
     }
 
-
     public ArrayList<T> read(Object obj) throws IOException {
         ArrayList<T> list = new ArrayList<>();
         File file = new File(url);
@@ -70,12 +69,5 @@ public class Archivos <T>{
         return list;
     }
 
-    public boolean existFile(){
-        File file = new File(url);
-        boolean exist = false;
-        if(file.exists()){
-            exist = true;
-        }
-        return exist;
-    }
+    public boolean exists(){ return new File(url).exists(); }
 }

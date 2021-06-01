@@ -21,7 +21,6 @@ public class Menu {
     }
 
     public void initProgram(){
-        roomTypeService.generateRooms();
         login();
     }
 

@@ -12,7 +12,7 @@ public class RoomRepository {
 
     public void RoomsGenerate() throws IOException {
         ArrayList<Room> rooms = new ArrayList<>();
-        if(archivos.existFile()){
+        if(archivos.exists()){
             rooms = archivos.readMany(Room.class);
         }else{
             for(int i = 0 ; i < 40 ; i++){

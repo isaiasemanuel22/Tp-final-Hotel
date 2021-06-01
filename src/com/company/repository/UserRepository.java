@@ -36,6 +36,6 @@ public class UserRepository{
         for (Long id: users.keySet()) {
             userList.add(users.get(id));
         }
-        file.save(userList);
+        file.saveMany(userList);
     }
 }
