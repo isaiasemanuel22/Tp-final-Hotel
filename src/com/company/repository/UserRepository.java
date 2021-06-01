@@ -13,22 +13,20 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class UserRepository{
-    private Archivos file;
+    private Archivos<User> file = new Archivos<>("Users");
+    private HashMap<Long, User> users;
 
-    public UserRepository() {
-        this.file = this.file = new Archivos("Users");
+    public HashMap<Long, User>getUsers(){ return users; }
+
+    public UserRepository() throws IOException {
+        this.users = getAll();
     }
 
     public HashMap<Long, User> getAll() throws IOException {
         HashMap<Long, User> usersMap = new HashMap<>();
-        File file = new File(this.file.getUrl());
-        if (file.exists()) {
-            ObjectMapper mapper = new ObjectMapper();
-            ArrayList<User> usersList = this.file.read(User.class);
-            for (User aux: usersList) {
-                usersMap.put(aux.getID(), aux);
-            }
-        }
+        ArrayList<User> usersList = this.file.read(User.class);
+        for (User aux: usersList)
+            usersMap.put(aux.getID(), aux);
         return usersMap;
     }
 

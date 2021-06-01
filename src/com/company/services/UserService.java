@@ -14,33 +14,16 @@ import java.util.Scanner;
 
 public class UserService {
     UserRepository repository;
-    Inputs inputs = new Inputs();
-    HashMap<Long, User> users;
+    Inputs inputs;
 
     public UserService() throws IOException {
         this.repository =  new UserRepository();
         this.inputs = new Inputs();
-        this.users = repository.getAll();
     }
 
-    public int traerUsuario(String userName){
-        int acceso = 0;
-        if(userName.equals("Isaias")){
-            System.out.println(userName);
-            acceso = 1;
-        }else if(userName.equals("Octavio")){
-            System.out.println(userName);
-            acceso = 2;
-        }else if(userName.equals("Emanuel")){
-            System.out.println(userName);
-            acceso = 3;
-        }
-        return acceso;
-    }
-    
-    public User getUserByID(HashMap<Integer, User> users, Long id){
-        return users.get(id);
-    }
+    public void addUser(User toAdd) throws IOException { repository.getAll().put(toAdd.getID(), toAdd); }
+
+    public User getUserByID(Long id) throws IOException { return repository.getAll().get(id); }
 
     public void updateUser(User user, int option){
         switch (option){
@@ -71,38 +54,35 @@ public class UserService {
             case 9:
                 user.setPassword(inputs.inputString());
                 break;
-        }
+        };
     }
 
-    private void showUserDetails(User user){
-        System.out.println("\n ID: "+user.getID()
-                +"\n Name: "+user.getName()
-                +"\n Last Name: "+user.getLastName()
-                +"\n DNI: "+user.getDNI()
-                +"\n Adress: "+user.getAdress()
-                +"\n Phone: "+user.getPhone()
-                +"\n Email: "+user.getEmail()
-                +"\n Genre: "+user.getGenre()
-                +"\n UserID: "+user.getUserId()
-                +"\n Password: "+user.getPassword()
+    public void showUserDetails(User user){
+        System.out.println("\n1. ID: "+user.getID()
+                +"\n2. Name: "+user.getName()
+                +"\n3. Last Name: "+user.getLastName()
+                +"\n4. DNI: "+user.getDNI()
+                +"\n5. Adress: "+user.getAdress()
+                +"\n6. Phone: "+user.getPhone()
+                +"\n7. Email: "+user.getEmail()
+                +"\n8. Genre: "+user.getGenre()
+                +"\n9. UserID: "+user.getUserId()
+                +"\n10. Password: "+user.getPassword()
         );
     }
 
-    private void showUsersOnSearch(HashMap<Integer, User> users){
-        for (Integer key: users.keySet()) {
-            System.out.println("\n ID: "+ users.get(key).getID()
-                    +"\n Name: "+ users.get(key).getName()
-                    +"\n Last Name: "+ users.get(key).getLastName()
-                    +"\n DNI: "+ users.get(key).getDNI()
+    private void showUsersOnSearch(User user){
+        for (Long key: repository.getUsers().keySet()) {
+            System.out.println("\n ID: "+ repository.getUsers().get(key).getID()
+                    +"\n Name: "+ repository.getUsers().get(key).getName()
+                    +"\n Last Name: "+ repository.getUsers().get(key).getLastName()
+                    +"\n DNI: "+ repository.getUsers().get(key).getDNI()
             );
         }
     }
 
-    public void showUsers(HashMap<Integer, User> users){
-        for (Integer key: users.keySet())
-            showUsersOnSearch(users);
-
-        System.out.print("\n Elija el ID del usuario que quiere ver: ");
-        showUserDetails(users.get(new Scanner(System.in).nextInt()));
+    public void showUsers(){
+        for (Long key: repository.getUsers().keySet())
+            showUsersOnSearch(repository.getUsers().get(key));
     }
 }
