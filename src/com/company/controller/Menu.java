@@ -1,7 +1,10 @@
 package com.company.controller;
 
 import com.company.models.User;
+import com.company.repository.UserRepository;
+import com.company.utils.Inputs;
 import com.company.services.UserService;
+import jdk.internal.util.xml.impl.Input;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,32 +22,11 @@ public class Menu {
     }
 
     public void login(){
-        System.out.println("Ingrese su nombre de usuario");
-        Scanner write = new Scanner(System.in);
-        String userName = null;
-        int acceso;
-        try{
-            userName = write.nextLine();
-        }catch (Exception e){
-            System.out.println(e.toString());
-        }
+        System.out.print("Ingrese su nombre de usuario: ");
+        String userName = new Inputs().inputString();
+        System.out.print("\nIngrese su contraseña: ");
+        String passWord = new Inputs().inputString();
 
-        acceso = userService.traerUsuario(userName);
-        if(acceso != 0 ){
-            switch (acceso) {
-                case 1 -> {
-                    administrador(userName);
-                }
-                case 2 -> {
-                    recepcionista(userName);
-
-                }
-                case 3 -> {
-                    usuario(userName);
-
-                }
-            }
-        }
 
     }
 
@@ -86,8 +68,13 @@ public class Menu {
 
     }
 
-    public void showUsers(){
-
+    public void showUsers() throws IOException {
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
+        new UserService().showUsers();
     }
 
+    public void updateUser() throws IOException {
+        System.out.print("\n\nIngrese la ID del usuario a modificar: ");
+        userService.showUserDetails(userService.getUserByID(new Inputs().inputInterger().longValue()));
+    }
 }
