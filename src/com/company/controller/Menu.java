@@ -1,7 +1,9 @@
 package com.company.controller;
 
 import com.company.models.User;
+import com.company.models.UserProfile;
 import com.company.repository.UserRepository;
+import com.company.services.UserProfileService;
 import com.company.utils.Inputs;
 import com.company.repository.RoomRepository;
 import com.company.repository.RoomTypeRepository;
@@ -16,6 +18,7 @@ import java.util.Scanner;
 
 public class Menu {
     private UserService userService = new UserService();
+    private UserProfileService = new UserProfileService;
     private RoomTypeService roomTypeService = new RoomTypeService();
     private RoomService roomService = new RoomService();
 
@@ -67,6 +70,12 @@ public class Menu {
         System.out.println("Dar permiso recepcionista > 4");
         System.out.println("Dar permiso conserje > 5 ");
 
+    }
+
+    public void addUser(){
+        User user = new User();
+        user.setUserType()
+        String name, String lastName, String DNI, String adress, String phone, String email, String genre, String userId, String password
     }
 
     public void showUsers() throws IOException {

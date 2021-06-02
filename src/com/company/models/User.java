@@ -16,6 +16,14 @@ public class User extends Person{
         this.password = password;
     }
 
+    public UserProfile getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserProfile userType) {
+        this.userType = userType;
+    }
+
     public String getUserId() { return userId; }
 
     public void setUserId(String userId) { this.userId = userId; }
