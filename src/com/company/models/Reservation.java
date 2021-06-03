@@ -10,6 +10,9 @@ public class Reservation {
     private Room room;
     private User user;
 
+    public Reservation() {
+    }
+
     public Reservation(int ID, LocalDate entryDate, LocalDate departureDate, Room room, User user) {
         uniqueID++;
         this.ID = uniqueID;

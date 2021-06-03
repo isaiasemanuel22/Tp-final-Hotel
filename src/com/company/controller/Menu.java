@@ -1,5 +1,7 @@
 package com.company.controller;
 
+import com.company.models.Reservation;
+import com.company.models.RoomType;
 import com.company.models.User;
 import com.company.models.UserProfile;
 import com.company.utils.Inputs;
@@ -168,4 +170,27 @@ public class Menu {
         System.out.print("\n\n Ingrese la ID del usuario a modificar: ");
         userService.showUserDetails(userService.getUserByID(new Inputs().inputInterger().longValue()));
     }
+
+    // GUIs de reservaciones
+
+    public void reservationMainMenu() {
+
+    }
+
+    public Reservation requestExpectedReservation() {
+
+        /*
+        tipo de habitacion
+        fechas
+         */
+        Reservation newReservation = new Reservation();
+    }
+
+    public RoomType requestRoomType() {
+        // me traigo todos los tipos de habitacion
+        // tomo la opcion
+        // la retorno
+    }
+
+
 }
