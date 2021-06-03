@@ -14,10 +14,9 @@ public class RoomTypeRepository {
     private Archivos<RoomType> archivos = new Archivos<>("roomType");
     private ArrayList<RoomType> typeRooms = new ArrayList<>();
 
-    public RoomTypeRepository() throws IOException {
+    private RoomTypeRepository() throws IOException {
         if(!archivos.exists()){
-            ArrayList<RoomType>  rooms = createRooms();
-            setRoomTypes(rooms);
+            setRoomTypes(createRoomsType());
             saveRoomsType();
         }
         this.typeRooms = archivos.read(RoomType.class);
@@ -37,7 +36,7 @@ public class RoomTypeRepository {
 
     public void saveRoomsType(){ archivos.save(this.typeRooms); }
 
-    private ArrayList<RoomType> createRooms(){
+    private ArrayList<RoomType> createRoomsType(){
         ArrayList<RoomType> roomsType = new ArrayList<>();
         for (int i = 0 ; i < 8 ; i++){
             RoomType newRoomType = new RoomType();

@@ -83,4 +83,15 @@ public class UserService {
         for (Long key: repository.getUsers().keySet())
             showUsersOnSearch(repository.getUsers().get(key));
     }
+
+    public Long searchUser(String userId){
+        long exists = 0;
+        Integer key = 1;
+        while (key <= repository.getUsers().size() && exists == 0) {
+            if (userId.equals(repository.getUsers().get(key.longValue()).getUserId()))
+                exists = key.longValue();
+            key++;
+        }
+        return exists;
+    }
 }

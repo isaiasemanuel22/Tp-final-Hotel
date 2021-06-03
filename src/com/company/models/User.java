@@ -16,11 +16,11 @@ public class User extends Person{
         this.password = password;
     }
 
-    public UserProfile getUserType() {
+    public UserProfile getUserProfile() {
         return userType;
     }
 
-    public void setUserType(UserProfile userType) {
+    public void setUserProfile(UserProfile userType) {
         this.userType = userType;
     }
 

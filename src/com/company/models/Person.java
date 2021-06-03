@@ -1,7 +1,7 @@
 package com.company.models;
 
 public abstract class Person {
-    private static int uniqueID=0;
+    private static long uniqueID=0;
     private long ID;
     private String name;
     private String lastName;
