@@ -10,6 +10,7 @@ public abstract class Person {
     private String phone;
     private String email;
     private String genre;
+    private boolean banned;
 
     public Person(){
         uniqueID++;
@@ -26,6 +27,7 @@ public abstract class Person {
         this.phone = phone;
         this.email = email;
         this.genre = genre;
+        this.banned = false;
     }
 
     public long getID() {
@@ -61,6 +63,12 @@ public abstract class Person {
     public String getGenre() { return genre; }
 
     public void setGenre(String genre) { this.genre = genre; }
+
+    public boolean isBanned() { return banned; }
+
+    public void ban() { this.banned = true; }
+
+    public void unban(){ this.banned = false; }
 
     @Override
     public String toString() {

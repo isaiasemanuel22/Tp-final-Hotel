@@ -20,9 +20,9 @@ public class Menu {
     public Menu() throws IOException {
     }
 
-    public void initProgram() throws IOException { login(); }
+    public void initProgram() throws IOException, InterruptedException { login(); }
 
-    public void login() throws IOException {
+    public void login() throws IOException, InterruptedException {
         int option;
         do {
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -57,12 +57,14 @@ public class Menu {
                             }
                         }
                         else{
-                            System.out.println("\n Contraseña Incorrecta! Presione cualquier tecla para continuar"+ new Scanner(System.in).nextLine());
+                            System.out.println("\n Contraseña Incorrecta!");
+                            Thread.sleep(3000);
                             option=0;
                         }
                     }
                     else {
-                        System.out.println("\n El usuario no existe! Presione cualquier tecla para continuar"+ new Scanner(System.in).nextLine());
+                        System.out.println("\n El usuario no existe!");
+                        Thread.sleep(3000);
                         option=0;
                     }
                 case 2:
@@ -72,22 +74,49 @@ public class Menu {
                     //This case does nothing :D, it serves to close the program.
                     break;
                 default:
-                    System.out.println("Ingrese una opcion correta! Presione cualquier tecla para continuar"+ new Scanner(System.in).nextLine());
+                    System.out.println("Ingrese una opcion correta!");
+                    Thread.sleep(3000);
                     option = 1;
-                    break;
             }
-        }while (option == 1 || option == 2);
+        }while (option>2 || option <1);
     }
 
-    private void administrador(User user){
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
-        System.out.println("ADMINISTRADOR");
-        System.out.println("\n Bienvenido " + user.getName()+" "+user.getLastName()
-                            +"\n1. Mostrar usuarios,"
-                            +"\n2. Buscar usuario."
-                            +"\n3. Crear usuario."
-                            +"\n4. Modificar Usuario."
-        );
+    private void administrador(User user) throws IOException, InterruptedException {
+        int option;
+        do {
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
+            System.out.println("ADMINISTRADOR");
+            System.out.println("\n Bienvenido " + user.getName() + " " + user.getLastName()
+                    + "\n\n1. Mostrar usuarios,"
+                    + "\n2. Crear usuario."
+                    + "\n3. Modificar Usuario."
+                    + "\n4. Buscar usuario."
+                    + "\n5. Salir."
+            );
+
+            option = new Inputs().inputInterger();
+            switch (option){
+                case 1:
+                    userService.showUsers();
+                    break;
+                case 2:
+                    createUser(true);
+                    break;
+                case 3:
+                    updateUser();
+                    break;
+                case 4:
+                    searchUser();
+                    break;
+                case 5:
+                    //This case does nothing :D, it serves to close the program.
+                    break;
+                default:
+                    System.out.println("Ingrese una opcion correta!");
+                    Thread.sleep(3000);
+                    option = 1;
+            }
+        }while (option>0 && option<5);
     }
 
     private void recepcionista(User user){
@@ -100,9 +129,8 @@ public class Menu {
         System.out.println(" Bienvenido " + user.getName()+" "+user.getLastName());
     }
 
-    public void createUser(boolean accessRermission) throws IOException {
+    public void createUser(boolean accessRermission) throws IOException, InterruptedException {
         User user = new User();
-
         if (accessRermission){
             int option;
             do {
@@ -126,10 +154,13 @@ public class Menu {
                         break;
                     default:
                         System.out.println("Ingrese una opcion correta!");
+                        Thread.sleep(3000);
                         break;
                 }
             } while (option > 3 || option < 1);
         }
+        else
+            user.setUserProfile(UserProfile.Pasajero);
 
         System.out.print(" Ingrese el nombre: ");
         user.setName(new Inputs().inputString());
@@ -165,32 +196,26 @@ public class Menu {
         new UserService().showUsers();
     }
 
-    public void updateUser() throws IOException {
+    public void updateUser() throws IOException, InterruptedException {
+        int option;
+        do {
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
+            System.out.print("\n\n Ingrese la ID del usuario a modificar: ");
+            User userToUpdate = userService.getUserByID(new Inputs().inputInterger().longValue());
+            userService.showUserDetails(userToUpdate);
+            System.out.print(" Ingrese el campo que quiera modificar: ");
+            option =new Inputs().inputInterger();
+            if(option<1 || option>9) {
+                System.out.println("\n Elija una opcion correcta!");
+                Thread.sleep(3000);
+            }
+        }while (option<1 || option>9);
+    }
+
+    public void searchUser() throws IOException {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
-        System.out.print("\n\n Ingrese la ID del usuario a modificar: ");
+        System.out.print("\n\n Ingrese la ID del usuario: ");
         userService.showUserDetails(userService.getUserByID(new Inputs().inputInterger().longValue()));
     }
-
-    // GUIs de reservaciones
-
-    public void reservationMainMenu() {
-
-    }
-
-    public Reservation requestExpectedReservation() {
-
-        /*
-        tipo de habitacion
-        fechas
-         */
-        Reservation newReservation = new Reservation();
-    }
-
-    public RoomType requestRoomType() {
-        // me traigo todos los tipos de habitacion
-        // tomo la opcion
-        // la retorno
-    }
-
-
+    
 }
