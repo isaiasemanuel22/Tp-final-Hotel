@@ -1,23 +1,13 @@
 package com.company.services;
 
-import com.company.controller.Menu;
-import com.company.models.Reservation;
-
-import java.io.IOException;
-import java.util.ArrayList;
+import com.company.repository.ReservationRepository;
 
 public class ReservationService {
 
-    Menu requestsToUser = new Menu();
-
-    public ReservationService() throws IOException {
-    }
+    private final ReservationRepository repository = new ReservationRepository();
 
     public void createReservation() {
 
-        // pedir tipo de habitacion y fechas
-
-        // verifico que haya disponibles
 
 
     }

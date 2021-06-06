@@ -2,7 +2,6 @@ package com.company.services;
 
 import com.company.models.Room;
 import com.company.models.RoomType;
-import com.company.models.Type;
 import com.company.repository.RoomRepository;
 import com.company.repository.RoomTypeRepository;
 
@@ -60,5 +59,11 @@ public class RoomService {
         return rooms;
         }
 
+    public boolean chekAvailability(Integer roomNumber) {
+
+        return roomRepository.isAvailable(roomNumber);
+
+
     }
+}
 
