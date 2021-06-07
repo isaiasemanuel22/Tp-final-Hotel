@@ -2,28 +2,23 @@ package com.company.services;
 
 import com.company.models.User;
 import com.company.repository.UserRepository;
-import com.company.utils.Archivos;
 import com.company.utils.Inputs;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
 
 public class UserService {
+
     UserRepository repository;
     Inputs inputs;
 
-    public UserService() throws IOException {
+    public UserService(){
         this.repository =  new UserRepository();
         this.inputs = new Inputs();
     }
 
-    public void addUser(User toAdd) throws IOException { repository.getAll().put(toAdd.getID(), toAdd); }
+    /*
 
-    public User getUserByID(Long id) throws IOException { return repository.getAll().get(id); }
+    public void addUser(User toAdd) { repository.getAll().put(toAdd.getID(), toAdd); }
+
+    public User getUserByID(Long id) { return repository.getAll().get(id); }
 
     public void updateUser(User user, int option){
         switch (option){
@@ -82,7 +77,7 @@ public class UserService {
     public void showUsers(){
         for (Long key: repository.getUsers().keySet())
             showUsersOnSearch(repository.getUsers().get(key));
-    }
+    }*/
 
     public Long searchUser(String userId){
         long exists = 0;
@@ -93,5 +88,9 @@ public class UserService {
             key++;
         }
         return exists;
+    }
+
+    public User searchByUserName(String userName) {
+        return repository.getByUserName(userName);
     }
 }
