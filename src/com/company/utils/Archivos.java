@@ -1,15 +1,10 @@
 package com.company.utils;
 
-import com.company.models.User;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import com.company.models.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Archivos <T>{
     private String url;
@@ -23,8 +18,6 @@ public class Archivos <T>{
         url = directory.getAbsolutePath() + "\\" + fileName;
     }
 
-    public String getUrl(){ return url; }
-
     public void save(ArrayList<T> c){
         File file = new File(url);
         try
@@ -37,24 +30,16 @@ public class Archivos <T>{
         }
     }
 
-    public void saveOne(Object c){
-        File file = new File(url);
-        try
-        {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(file , c);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public ArrayList<T> read(Object obj) throws IOException {
+    public ArrayList<T> read(Object obj){
         ArrayList<T> list = new ArrayList<>();
         File file = new File(url);
         if (file.exists()) {
             ObjectMapper mapper = new ObjectMapper();
-            list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, obj.getClass())));
+            try {
+                list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, obj.getClass())));
+            } catch (IOException e) {
+                System.out.println("\nHubo un problema a la hora de leer el archivo : " + e);
+            }
         }
         return list;
     }
