@@ -12,7 +12,7 @@ public class RoomService {
     RoomRepository roomRepository = new RoomRepository();
     RoomTypeRepository roomTypeRepository = RoomTypeRepository.getInstance();
 
-    public RoomService() throws IOException {
+    public RoomService() {
     }
 
     public void generateRooms() {

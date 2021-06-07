@@ -1,17 +1,11 @@
 package com.company.models;
 
-public class User {
+public class User extends Person {
 
     private UserType userType;
     private String userName;
-    private String userId;
+    private Long userId;
     private String password;
-
-    public enum UserType {
-        ADMIN,
-        RECEPCIONISTA,
-        PASAJERO;
-    }
 
     public User() {
 
@@ -21,17 +15,29 @@ public class User {
         this.userName = userName;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    public String getUserId() { return userId; }
+    public Long getUserId() { return userId; }
 
-    public void setUserId(String userId) { this.userId = userId; }
+    public void setUserId(String userId) { this.userId = Long.parseLong(userId); }
 
     public String getPassword() { return password; }
 
     public void setPassword(String password) { this.password = password; }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
 
     @Override
     public String toString() {

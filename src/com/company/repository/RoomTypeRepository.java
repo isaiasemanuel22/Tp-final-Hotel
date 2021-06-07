@@ -4,17 +4,15 @@ package com.company.repository;
 import com.company.models.RoomType;
 import com.company.models.Type;
 import com.company.utils.Archivos;
-import com.company.utils.Inputs;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class RoomTypeRepository {
     private static RoomTypeRepository instance;
     private Archivos<RoomType> archivos = new Archivos<>("roomType");
-    private ArrayList<RoomType> typeRooms = new ArrayList<>();
+    private ArrayList<RoomType> typeRooms;
 
-    private RoomTypeRepository() throws IOException {
+    private RoomTypeRepository() {
         if(!archivos.exists()){
             setRoomTypes(createRoomsType());
             saveRoomsType();
@@ -23,7 +21,7 @@ public class RoomTypeRepository {
         instance = this;
     }
 
-    public static RoomTypeRepository getInstance() throws IOException {
+    public static RoomTypeRepository getInstance() {
         if(instance == null){
             instance = new RoomTypeRepository();
         }

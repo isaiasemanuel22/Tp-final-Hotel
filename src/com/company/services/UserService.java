@@ -14,9 +14,8 @@ public class UserService {
         this.inputs = new Inputs();
     }
 
-    /*
-
     public void addUser(User toAdd) { repository.getAll().put(toAdd.getID(), toAdd); }
+
 
     public User getUserByID(Long id) { return repository.getAll().get(id); }
 
@@ -53,7 +52,7 @@ public class UserService {
     }
 
     public void showUserDetails(User user){
-        System.out.println("\n1. ID: "+user.getID()
+        System.out.println("\n1. ID: "+user.getUserId()
                 +"\n2. Name: "+user.getName()
                 +"\n3. Last Name: "+user.getLastName()
                 +"\n4. DNI: "+user.getDNI()
@@ -74,11 +73,6 @@ public class UserService {
         );
     }
 
-    public void showUsers(){
-        for (Long key: repository.getUsers().keySet())
-            showUsersOnSearch(repository.getUsers().get(key));
-    }*/
-
     public Long searchUser(String userId){
         long exists = 0;
         Integer key = 1;
@@ -92,5 +86,9 @@ public class UserService {
 
     public User searchByUserName(String userName) {
         return repository.getByUserName(userName);
+    }
+
+    public void register(User user) {
+        repository.register(user);
     }
 }

@@ -8,21 +8,25 @@ import java.util.HashMap;
 
 public class UserRepository{
 
-    private Archivos<User> file = new Archivos<>("Users");
+    private Archivos<User> file ;
     private HashMap<Long, User> users;
 
-    public UserRepository(){
+    public UserRepository() {
+        this.file = new Archivos<>("Users");
         this.users = getAll();
     }
 
-    public HashMap<Long, User>getUsers(){ return users; }
+    public HashMap<Long, User> getUsers(){ return users; }
 
     public HashMap<Long, User> getAll(){
+
         HashMap<Long, User> usersMap = new HashMap<>();
         ArrayList<User> usersList = this.file.read(User.class);
-        /*
-        for (User aux: usersList)
-            usersMap.put(aux.getID(), aux);*/
+
+        for (User aux: usersList){
+            usersMap.put(aux.getUserId(), aux);
+        }
+
         return usersMap;
     }
 
@@ -36,5 +40,10 @@ public class UserRepository{
 
     public User getByUserName(String userName){
         return users.get(new User(userName));
+    }
+
+
+    public void register(User user) {
+        file.save(user);
     }
 }
