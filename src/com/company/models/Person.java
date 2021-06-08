@@ -1,8 +1,6 @@
 package com.company.models;
 
 public abstract class Person {
-    private static long uniqueID=0;
-    private long ID;
     private String name;
     private String lastName;
     private String DNI;
@@ -13,13 +11,9 @@ public abstract class Person {
     private boolean banned;
 
     public Person(){
-        uniqueID++;
-        this.ID=uniqueID;
     }
 
     public Person(String name, String lastName, String DNI, String adress, String phone, String email, String genre) {
-        uniqueID++;
-        this.ID=uniqueID;
         this.name = name;
         this.lastName = lastName;
         this.DNI = DNI;
@@ -29,12 +23,6 @@ public abstract class Person {
         this.genre = genre;
         this.banned = false;
     }
-
-    public long getID() {
-        return ID;
-    }
-
-    public void setID(int ID) { this.ID = ID; }
 
     public String getName() { return name; }
 
@@ -73,7 +61,6 @@ public abstract class Person {
     @Override
     public String toString() {
         return "Person{" +
-                "ID=" + ID +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", DNI='" + DNI + '\'' +

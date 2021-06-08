@@ -13,29 +13,32 @@ public class Menu {
     }
 
     public void initProgram() throws IOException, InterruptedException {
-        User login = new User();
+        User userRequest = new User();
         do {
             Session session = new Session();
-            login = session.mainMenu();
-            init(login);
-        }while (login != null);
+            userRequest = session.mainMenu();
+            view(userRequest);
+        }while (userRequest != null);
 
     }
 
-    public void init(User user) throws IOException, InterruptedException {
-        switch (user.getUserType()){
-            case ADMIN -> {
-                MenuAdmin menuAdmin = new MenuAdmin(user);
-                menuAdmin.mainMenu(user);
+    public void view(User user) throws IOException, InterruptedException {
+        if(user!=null) {
+            switch (user.getUserType()) {
+                case ADMIN -> {
+                    MenuAdmin menuAdmin = new MenuAdmin(user);
+                    menuAdmin.mainMenu(user);
+                }
+                case RECEPCIONISTA -> {
+                    MenuRecepcionista menu = new MenuRecepcionista(user);
+                    menu.mainMenu();
+                }
+                case PASAJERO -> {
+                    MenuGuest menu = new MenuGuest(user);
+                    menu.mainMenu();
+                }
             }
-            case RECEPCIONISTA -> {
-                MenuRecepcionista menu = new MenuRecepcionista(user);
-                menu.mainMenu();
-            }
-            case PASAJERO -> {
-                MenuGuest menu = new MenuGuest(user);
-                menu.mainMenu();
-            }
+            userService.saveAll();
         }
     }
 }

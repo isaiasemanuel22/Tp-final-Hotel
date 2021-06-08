@@ -18,6 +18,10 @@ public class Archivos<T> {
         url = directory.getAbsolutePath() + "\\" + fileName;
     }
 
+    public Archivos() {
+
+    }
+
     public void save(ArrayList<T> c) {
         File file = new File(url);
         try {
@@ -36,7 +40,6 @@ public class Archivos<T> {
             ObjectMapper mapper = new ObjectMapper();
             mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
             list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, obj)));
-            System.out.println(list);
         }
         return list;
     }

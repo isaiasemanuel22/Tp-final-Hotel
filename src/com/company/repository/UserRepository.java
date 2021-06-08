@@ -11,9 +11,9 @@ import java.util.Map;
 public class UserRepository{
     private static UserRepository instance;
     private Archivos<User> file = new Archivos<>("users");
-    private HashMap<Long, User> users;
+    private ArrayList<User> users;
 
-    public HashMap<Long, User>getUsers(){ return users; }
+    public ArrayList<User> getUsers(){ return users; }
 
     private UserRepository() throws IOException {
         users = getAll();
@@ -26,44 +26,29 @@ public class UserRepository{
         return instance;
     }
 
-    public void save(User nuevoUsuario){
-        ArrayList<User> listUsers = getUserArray();
+
+    public void save(User nuevoUsuario) throws IOException {
+        ArrayList<User> listUsers = file.read(User.class);
         listUsers.add(nuevoUsuario);
         file.save(listUsers);
-        users.put(nuevoUsuario.getID(), nuevoUsuario);
+        users.add(nuevoUsuario);
     }
 
+    public void saveAll(){
+        file.save(users);
+     }
 
-    public HashMap<Long, User> getAll() throws IOException {
-        HashMap<Long, User> usersMap = new HashMap<>();
-        ArrayList<User> usersList = this.file.read(User.class);
-        for (User aux: usersList)
-            usersMap.put(aux.getID(), aux);
-
-        return usersMap;
+    public ArrayList<User> getAll() throws IOException {
+        this.users = file.read(User.class);
+        return this.users;
     }
 
-    public ArrayList<User> getUserArray(){
-        ArrayList<User> userList = new ArrayList<>();
-        for (Long id: users.keySet()) {
-            userList.add(users.get(id));
-        }
-        return userList;
-    }
-
-    public User getUser(String userId){
-        User userSearch = null;
-        for (Map.Entry<Long, User> user : users.entrySet()) {
-            if(user.getValue().getUserId().equals(userId)){
-                userSearch = user.getValue();
-            }
-        }
-        return userSearch;
-    }
 
     public User getByUserName(String userName){
-        return users.get(new User(userName));
+        User userSearch = null;
+        for (User user : users)
+            if(user.getUserName().equals(userName))
+                userSearch = user;
+        return userSearch;
     }
-
-
 }

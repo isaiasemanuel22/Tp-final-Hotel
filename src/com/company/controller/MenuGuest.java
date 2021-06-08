@@ -20,7 +20,7 @@ public class MenuGuest {
         int option;
         do {
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
-            System.out.println("Pasajero");
+            System.out.println(" "+user.getUserType());
             System.out.println("\n Bienvenido " + user.getUserName()
                     + "\n\n1. Realizar reserva"
                     + "\n2. Salir"
