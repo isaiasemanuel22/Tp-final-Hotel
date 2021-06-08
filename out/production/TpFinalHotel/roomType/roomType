@@ -1,1 +1,1 @@
-[{"roomType":"Individual","price":200},{"roomType":"Doble","price":300},{"roomType":"Triple","price":400},{"roomType":"Quad","price":500},{"roomType":"Queen","price":600},{"roomType":"King","price":700},{"roomType":"Suite","price":800},{"roomType":"SuitePresidencial","price":900}]
+[{"roomType":"Individual","price":100},{"roomType":"Doble","price":200},{"roomType":"Triple","price":300},{"roomType":"Quad","price":400},{"roomType":"Queen","price":500},{"roomType":"King","price":600},{"roomType":"Suite","price":700},{"roomType":"SuitePresidencial","price":800}]

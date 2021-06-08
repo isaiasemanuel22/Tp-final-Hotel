@@ -1,16 +1,31 @@
 package com.company.models;
 
-public class User {
+public class User extends Person{
 
     private UserType userType;
     private String userName;
     private String userId;
     private String password;
+    private UserProfile userProfile;
 
-    public enum UserType {
-        ADMIN,
-        RECEPCIONISTA,
-        PASAJERO;
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
     }
 
     public User() {

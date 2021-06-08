@@ -43,35 +43,35 @@ public class RoomTypeRepository {
             switch (i) {
                 case 0 -> {
                     System.out.println("Individual");
-                    roomsType.add(new RoomType(Type.Individual, 0));
+                    roomsType.add(new RoomType(Type.Individual, Inputs.inputInterger()));
                 }
                 case 1 -> {
                     System.out.println("Dobre");
-                    roomsType.add(new RoomType(Type.Doble, 0));
+                    roomsType.add(new RoomType(Type.Doble, Inputs.inputInterger()));
                 }
                 case 2 -> {
                     System.out.println("Triple");
-                    roomsType.add(new RoomType(Type.Triple, 0));
+                    roomsType.add(new RoomType(Type.Triple, Inputs.inputInterger()));
                 }
                 case 3 -> {
                     System.out.println("Quad");
-                    roomsType.add(new RoomType(Type.Quad, 0));
+                    roomsType.add(new RoomType(Type.Quad, Inputs.inputInterger()));
                 }
                 case 4 -> {
                     System.out.println("Queen");
-                    roomsType.add(new RoomType(Type.Queen, 0));
+                    roomsType.add(new RoomType(Type.Queen, Inputs.inputInterger()));
                 }
                 case 5 -> {
                     System.out.println("King");
-                    roomsType.add(new RoomType(Type.King, 0));
+                    roomsType.add(new RoomType(Type.King, Inputs.inputInterger()));
                 }
                 case 6 -> {
                     System.out.println("Suite");
-                    roomsType.add(new RoomType(Type.Suite, 0));
+                    roomsType.add(new RoomType(Type.Suite, Inputs.inputInterger()));
                 }
                 case 7 -> {
                     System.out.println("SuitePresidencial");
-                    roomsType.add(new RoomType(Type.SuitePresidencial, 0));
+                    roomsType.add(new RoomType(Type.SuitePresidencial, Inputs.inputInterger()));
                 }
             }
         }

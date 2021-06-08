@@ -4,10 +4,15 @@ import com.company.models.User;
 import com.company.services.UserService;
 import com.company.utils.Inputs;
 
+import java.io.IOException;
+
 public class Session {
 
     private User user;
     private UserService userService = new UserService();
+
+    public Session() throws IOException {
+    }
 
     public User mainMenu(){
         int option;
@@ -18,7 +23,7 @@ public class Session {
                     +"\n2. Registrarse"
                     +"\n3. Salir"
             );
-            option = new Inputs().inputInterger();
+            option = Inputs.inputInterger();
             System.out.println("\n\n\n");
 
             switch (option) {
@@ -35,8 +40,7 @@ public class Session {
                     System.out.println("Ingrese una opcion correta!");
                     option = 1;
             }
-        }while (option>2 || option <1);
-
+        }while (option != 3);
 
         return null;
     }
@@ -44,12 +48,12 @@ public class Session {
     private User signIn(){
 
         System.out.print(" Ingrese el nombre de usuario: ");
-        String userName = new Inputs().inputString();
+        String userName = Inputs.inputString();
         User requestedUser = userService.searchByUserName(userName);
 
         if (requestedUser != null) {
             System.out.print("\n Ingrese la contraseña: ");
-            String inputPassword = new Inputs().inputString();
+            String inputPassword = Inputs.inputString();
 
             if (inputPassword.equals(requestedUser.getPassword())) {
                 return requestedUser;

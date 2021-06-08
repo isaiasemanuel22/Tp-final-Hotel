@@ -4,21 +4,23 @@ import com.company.models.User;
 import com.company.repository.UserRepository;
 import com.company.utils.Inputs;
 
+import java.io.IOException;
+
 public class UserService {
 
     UserRepository repository;
     Inputs inputs;
 
-    public UserService(){
-        this.repository =  new UserRepository();
+    public UserService() throws IOException {
+        this.repository =  UserRepository.getInstance();
         this.inputs = new Inputs();
     }
 
-    /*
+    public void addUser(User toAdd) throws IOException {
+        repository.save(toAdd);
+    }
 
-    public void addUser(User toAdd) { repository.getAll().put(toAdd.getID(), toAdd); }
-
-    public User getUserByID(Long id) { return repository.getAll().get(id); }
+    public User getUserByID(Long id) throws IOException { return repository.getAll().get(id); }
 
     public void updateUser(User user, int option){
         switch (option){
@@ -77,17 +79,10 @@ public class UserService {
     public void showUsers(){
         for (Long key: repository.getUsers().keySet())
             showUsersOnSearch(repository.getUsers().get(key));
-    }*/
+    }
 
-    public Long searchUser(String userId){
-        long exists = 0;
-        Integer key = 1;
-        while (key <= repository.getUsers().size() && exists == 0) {
-            if (userId.equals(repository.getUsers().get(key.longValue()).getUserId()))
-                exists = key.longValue();
-            key++;
-        }
-        return exists;
+    public User searchUser(String userId){
+        return  repository.getUser(userId);
     }
 
     public User searchByUserName(String userName) {

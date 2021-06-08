@@ -1,7 +1,7 @@
 package com.company.utils;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,16 +30,15 @@ public class Archivos <T>{
         }
     }
 
-    public ArrayList<T> read(Object obj){
+
+    public ArrayList<T> read(Class<T> obj) throws IOException {
         ArrayList<T> list = new ArrayList<>();
         File file = new File(url);
         if (file.exists()) {
             ObjectMapper mapper = new ObjectMapper();
-            try {
-                list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, obj.getClass())));
-            } catch (IOException e) {
-                System.out.println("\nHubo un problema a la hora de leer el archivo : " + e);
-            }
+            mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+            list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, obj)));
+            System.out.println(list);
         }
         return list;
     }
