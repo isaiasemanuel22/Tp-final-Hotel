@@ -27,67 +27,71 @@ public class Menu {
         do {
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
             System.out.println("\n1. Iniciar sesion."
-                    +"\n2. Registrarse."
-                    +"\n3. Salir"
+                    +"\n2. Salir"
             );
-            option = new Inputs().inputInterger();
+            option = Inputs.inputInterger();
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
 
             switch (option) {
-                case 1:
+                case 1 -> {
                     System.out.print(" Ingrese el nombre de usuario: ");
-                    String userName = new Inputs().inputString();
-                    Long userId = userService.searchUser(userName);
-
-                    if (userId != 0) {
+                    String userName = Inputs.inputString();
+                    User user = userService.searchUser(userName);
+                    if (user != null) {
                         System.out.print("\n Ingrese la contraseña: ");
-                        String password = new Inputs().inputString();
+                        String password = Inputs.inputString();
 
-                        if (password.equals(userService.getUserByID(userId).getPassword())){
-                            switch (userService.getUserByID(userId).getUserProfile()){
-                                case Administrador:
-                                    administrador(userService.getUserByID(userId));
-                                    break;
-                                case Pasajero:
-                                    pasajero(userService.getUserByID(userId));
-                                    break;
-                                case Recepcionista:
-                                    recepcionista(userService.getUserByID(userId));
-                                    break;
+                        if (password.equals(user.getPassword())) {
+
+                            switch (user.getUserProfile()) {
+                                case Administrador -> administrador(user);
+                                case Pasajero -> pasajero(user);
+                                case Recepcionista -> recepcionista(user);
                             }
+                        } else {
+                            System.out.println("\n Contraseña Incorrecta! Presione cualquier tecla para continuar" + new Scanner(System.in).nextLine());
+                            option = 0;
                         }
-                        else{
-                            System.out.println("\n Contraseña Incorrecta! Presione cualquier tecla para continuar"+ new Scanner(System.in).nextLine());
-                            option=0;
-                        }
+                    } else {
+                        System.out.println("\n El usuario no existe! Presione cualquier tecla para continuar" + new Scanner(System.in).nextLine());
+                        option = 0;
                     }
-                    else {
-                        System.out.println("\n El usuario no existe! Presione cualquier tecla para continuar"+ new Scanner(System.in).nextLine());
-                        option=0;
-                    }
-                case 2:
-                    createUser(false);
-                    break;
-                case 3:
-                    //This case does nothing :D, it serves to close the program.
-                    break;
-                default:
-                    System.out.println("Ingrese una opcion correta! Presione cualquier tecla para continuar"+ new Scanner(System.in).nextLine());
+                }
+                case 2 -> System.out.println("Saliendo...");
+                case 9 -> createUser(true);
+                default -> {
+                    System.out.println("Ingrese una opcion correta! Presione cualquier tecla para continuar" + new Scanner(System.in).nextLine());
                     option = 1;
-                    break;
+                }
             }
-        }while (option == 1 || option == 2);
+        }while (option != 3);
     }
 
-    private void administrador(User user){
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
-        System.out.println("ADMINISTRADOR");
-        System.out.println("\n Bienvenido " + user.getName()+" "+user.getLastName()
-                            +"\n1. Mostrar usuarios,"
-                            +"\n2. Buscar usuario."
-                            +"\n3. Crear usuario."
-                            +"\n4. Modificar Usuario."
-        );
+    private void administrador(User user) throws IOException {
+        int option;
+        do {
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
+            System.out.println("ADMINISTRADOR");
+            System.out.println("\n Bienvenido " + user.getName() + " " + user.getLastName()
+                    + "\n1. Mostrar usuarios,"
+                    + "\n2. Buscar usuario."
+                    + "\n3. Crear usuario."
+                    + "\n4. Modificar Usuario."
+                    + "\n5. Salir."
+            );
+            option = Inputs.inputInterger();
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
+
+            switch (option) {
+                case 1 -> System.out.println("mostrar usuarios");
+                case 2 -> System.out.println("buscar usuario");
+                case 3 -> createUser(true);
+                case 4 -> System.out.println("modificar usuario");
+                case 5 -> System.out.println("Saliendo...");
+                default -> System.out.println("Ingrese una opcion Correcta");
+            }
+
+        }while (option != 5);
     }
 
     private void recepcionista(User user){
@@ -103,7 +107,7 @@ public class Menu {
     public void createUser(boolean accessRermission) throws IOException {
         User user = new User();
 
-        if (accessRermission){
+        if (accessRermission) {
             int option;
             do {
                 System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
@@ -113,51 +117,46 @@ public class Menu {
                         + "\n Elige que tipo de usario: "
                 );
 
-                option = new Inputs().inputInterger();
+                option = Inputs.inputInterger();
                 switch (option) {
-                    case 1:
-                        user.setUserProfile(UserProfile.Administrador);
-                        break;
-                    case 2:
-                        user.setUserProfile(UserProfile.Pasajero);
-                        break;
-                    case 3:
-                        user.setUserProfile(UserProfile.Recepcionista);
-                        break;
-                    default:
-                        System.out.println("Ingrese una opcion correta!");
-                        break;
+                    case 1 -> user.setUserProfile(UserProfile.Administrador);
+                    case 2 -> user.setUserProfile(UserProfile.Pasajero);
+                    case 3 -> user.setUserProfile(UserProfile.Recepcionista);
+                    default -> System.out.println("Ingrese una opcion correta!");
                 }
             } while (option > 3 || option < 1);
+
+
+            System.out.print(" Ingrese el nombre: ");
+            user.setName(Inputs.inputString());
+
+            System.out.print("\n Ingrese el apellido: ");
+            user.setLastName(Inputs.inputString());
+
+            System.out.print("\n Ingrese el DNI: ");
+            user.setDNI(Inputs.inputString());
+
+            System.out.print("\n Ingrese la direccion: ");
+            user.setAdress(Inputs.inputString());
+
+            System.out.print("\n Ingrese el telefono: ");
+            user.setPhone(Inputs.inputString());
+
+            System.out.print("\n Ingrese el email: ");
+            user.setEmail(Inputs.inputString());
+
+            System.out.print("\n Ingrese el genero: ");
+            user.setGenre(Inputs.inputString());
+
+            System.out.print("\n Ingrese el nombre de usuario: ");
+            user.setUserId(Inputs.inputString());
+
+            System.out.print("\n Ingrese la contraseña: ");
+            user.setPassword(Inputs.inputString());
+            userService.addUser(user);
+        }else{
+            System.out.println("No tiene permiso de acceso");
         }
-
-        System.out.print(" Ingrese el nombre: ");
-        user.setName(new Inputs().inputString());
-
-        System.out.print("\n Ingrese el apellido: ");
-        user.setLastName(new Inputs().inputString());
-
-        System.out.print("\n Ingrese el DNI: ");
-        user.setDNI(new Inputs().inputString());
-
-        System.out.print("\n Ingrese la direccion: ");
-        user.setAdress(new Inputs().inputString());
-
-        System.out.print("\n Ingrese el telefono: ");
-        user.setPhone(new Inputs().inputString());
-
-        System.out.print("\n Ingrese el email: ");
-        user.setEmail(new Inputs().inputString());
-
-        System.out.print("\n Ingrese el genero: ");
-        user.setGenre(new Inputs().inputString());
-
-        System.out.print("\n Ingrese el nombre de usuario: ");
-        user.setUserId(new Inputs().inputString());
-
-        System.out.print("\n Ingrese la contraseña: ");
-        user.setPassword(new Inputs().inputString());
-        userService.addUser(user);
     }
 
     public void showUsers() throws IOException {
@@ -184,12 +183,14 @@ public class Menu {
         fechas
          */
         Reservation newReservation = new Reservation();
+        return null;
     }
 
     public RoomType requestRoomType() {
         // me traigo todos los tipos de habitacion
         // tomo la opcion
         // la retorno
+        return null;
     }
 
 

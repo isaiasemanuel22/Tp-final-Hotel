@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class ReservationService {
 
-    Menu requestsToUser = new Menu();
+//    Menu requestsToUser = new Menu();
 
     public void createReservation() {
 

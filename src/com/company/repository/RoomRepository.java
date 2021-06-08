@@ -14,19 +14,13 @@ public class RoomRepository {
         rooms =  archivos.read(Room.class);
 
     }
-    public void RoomsGenerate() throws IOException {
-        ArrayList<Room> rooms = new ArrayList<>();
-        if (archivos.exists()) {
-            rooms = archivos.read(Room.class);
-        } else {
-            for (int i = 0; i < 40; i++) {
-
-            }
-        }
-    }
 
     public void saveRooms(ArrayList<Room> rooms){
         System.out.println(rooms);
         archivos.save(rooms);
+    }
+
+    public ArrayList<Room> getAll(){
+        return this.rooms;
     }
 }

@@ -1,15 +1,9 @@
 package com.company.utils;
-
-import com.company.models.User;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import com.company.models.User;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Archivos <T>{
     private String url;
@@ -37,24 +31,14 @@ public class Archivos <T>{
         }
     }
 
-    public void saveOne(Object c){
-        File file = new File(url);
-        try
-        {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(file , c);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public ArrayList<T> read(Object obj) throws IOException {
+    public ArrayList<T> read(Class<T> obj) throws IOException {
         ArrayList<T> list = new ArrayList<>();
         File file = new File(url);
         if (file.exists()) {
             ObjectMapper mapper = new ObjectMapper();
-            list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, obj.getClass())));
+            mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+            list = (mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(ArrayList.class, obj)));
+            System.out.println(list);
         }
         return list;
     }

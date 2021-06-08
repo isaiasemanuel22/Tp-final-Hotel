@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Inputs <T>  {
 
-    private Scanner scan = new Scanner(System.in);
+    private static Scanner scan = new Scanner(System.in);
 
      public Inputs(){
 
@@ -55,23 +55,25 @@ public class Inputs <T>  {
          return entrada;
      }
 
-     public String inputString(){
+     public static String inputString(){
          String entrada = null;
          try {
-             entrada = this.scan.nextLine();
+             entrada = scan.nextLine();
          }catch (Exception e){
-             this.scan.nextLine();
+             scan.nextLine();
          }
          return entrada;
      }
 
-    public Integer inputInterger(){
+    public static Integer inputInterger(){
         Integer entrada = null;
         try {
-            entrada = this.scan.nextInt();;
+            entrada = scan.nextInt();;
         }catch (Exception e){
-            this.scan.nextLine();
+            scan.nextLine();
         }
+
+        scan.nextLine();
         return entrada;
     }
 }
