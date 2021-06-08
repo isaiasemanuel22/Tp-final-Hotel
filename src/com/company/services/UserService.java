@@ -130,11 +130,22 @@ public class UserService {
             case 9:
                 System.out.print("\n Ingrese la contraseña: ");
                 user.setPassword(Inputs.inputString());
+            case 10:
+                if (user.isBanned())
+                    user.unban();
+                else
+                    user.ban();
                 break;
         };
     }
 
     public void showUserDetails(User user){
+        String status = new String();
+        if(user.isBanned())
+            status = "Baneado";
+        else
+            status = "Activo";
+
         System.out.println("\n 1. Tipo de usuario: "+user.getUserType()
                 +"\n 2. Nombre: "+user.getName()
                 +"\n 3. Apellido: "+user.getLastName()
@@ -144,6 +155,7 @@ public class UserService {
                 +"\n 7. Email: "+user.getEmail()
                 +"\n 8. Genero: "+user.getGenre()
                 +"\n 9. Contraseña: "+user.getPassword()
+                +"\n 10. Estado: "+status
         );
     }
 
