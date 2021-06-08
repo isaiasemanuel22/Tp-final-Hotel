@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class RoomTypeRepository {
     private static RoomTypeRepository instance;
     private Archivos<RoomType> archivos = new Archivos<>("roomType");
-    private ArrayList<RoomType> typeRooms = new ArrayList<>();
+    private ArrayList<RoomType> typeRooms;
 
     private RoomTypeRepository() throws IOException {
         if(!archivos.exists()){

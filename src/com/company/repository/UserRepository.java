@@ -39,6 +39,7 @@ public class UserRepository{
         ArrayList<User> usersList = this.file.read(User.class);
         for (User aux: usersList)
             usersMap.put(aux.getID(), aux);
+
         return usersMap;
     }
 
@@ -63,4 +64,6 @@ public class UserRepository{
     public User getByUserName(String userName){
         return users.get(new User(userName));
     }
+
+
 }

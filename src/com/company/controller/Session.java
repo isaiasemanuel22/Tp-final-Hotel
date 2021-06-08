@@ -8,20 +8,20 @@ import java.io.IOException;
 
 public class Session {
 
-    private User user;
+    private User user = new User();
     private UserService userService = new UserService();
 
     public Session() throws IOException {
     }
 
-    public User mainMenu(){
+    public User mainMenu() {
         int option;
         do {
             System.out.println("\n\n\n");
             System.out.println("" +
                     "\n1. Iniciar sesion."
-                    +"\n2. Registrarse"
-                    +"\n3. Salir"
+                    + "\n2. Registrarse"
+                    + "\n3. Salir"
             );
             option = Inputs.inputInterger();
             System.out.println("\n\n\n");
@@ -30,9 +30,7 @@ public class Session {
                 case 1:
                     return signIn();
                 case 2:
-
-                    //return createUser(false);
-                    break;
+                    return createUser();
                 case 3:
                     //This case does nothing :D, it serves to close the program.
                     break;
@@ -45,7 +43,26 @@ public class Session {
         return null;
     }
 
-    private User signIn(){
+    private User createUser() {
+        System.out.print(" Ingrese el nombre: ");
+        user.setUserName(Inputs.inputString());
+
+        System.out.print("\n Ingrese el apellido: ");
+        user.setLastName(Inputs.inputString());
+
+        System.out.print("\n Ingrese el DNI: ");
+        user.setDNI(Inputs.inputString());
+
+        try {
+            userService.register(user);
+            System.out.println("El usuario se registro correctamente, por favor inicie sesion");
+        } catch (Exception e) {
+            System.out.println("Hubo un problema al registar el usuario por favor intente mas tarde.");
+        }
+        return null;
+    }
+
+    private User signIn() {
 
         System.out.print(" Ingrese el nombre de usuario: ");
         String userName = Inputs.inputString();
@@ -61,19 +78,18 @@ public class Session {
                 System.out.println("\n Contraseña Incorrecta!");
                 return null;
             }
-        }
-        else {
+        } else {
             System.out.println("\n El usuario no existe!");
         }
         return null;
     }
 
-    public void create(){
+    public void create() {
 
         User newUser = new User();
 
         Inputs<String> newUserName = new Inputs<String>();
-        newUserName.input("Ingrese nombre de usuario",newUserName);
+        newUserName.input("Ingrese nombre de usuario", newUserName);
 
 
     }

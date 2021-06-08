@@ -9,11 +9,9 @@ import java.io.IOException;
 public class UserService {
 
     UserRepository repository;
-    Inputs inputs;
 
     public UserService() throws IOException {
         this.repository =  UserRepository.getInstance();
-        this.inputs = new Inputs();
     }
 
     public void addUser(User toAdd) throws IOException {
@@ -25,37 +23,37 @@ public class UserService {
     public void updateUser(User user, int option){
         switch (option){
             case 1:
-                user.setName(inputs.inputString());
+                user.setName(Inputs.inputString());
                 break;
             case 2:
-                user.setLastName(inputs.inputString());
+                user.setLastName(Inputs.inputString());
                 break;
             case 3:
-                user.setDNI(inputs.inputString());
+                user.setDNI(Inputs.inputString());
                 break;
             case 4:
-                user.setAdress(inputs.inputString());
+                user.setAdress(Inputs.inputString());
                 break;
             case 5:
-                user.setPhone(inputs.inputString());
+                user.setPhone(Inputs.inputString());
                 break;
             case 6:
-                user.setEmail(inputs.inputString());
+                user.setEmail(Inputs.inputString());
                 break;
             case 7:
-                user.setGenre(inputs.inputString());
+                user.setGenre(Inputs.inputString());
                 break;
             case 8:
-                user.setUserId(inputs.inputString());
+                user.setUserId(Inputs.inputString());
                 break;
             case 9:
-                user.setPassword(inputs.inputString());
+                user.setPassword(Inputs.inputString());
                 break;
         };
     }
 
     public void showUserDetails(User user){
-        System.out.println("\n1. ID: "+user.getID()
+        System.out.println("\n1. ID: "+user.getUserId()
                 +"\n2. Name: "+user.getName()
                 +"\n3. Last Name: "+user.getLastName()
                 +"\n4. DNI: "+user.getDNI()
@@ -80,12 +78,22 @@ public class UserService {
         for (Long key: repository.getUsers().keySet())
             showUsersOnSearch(repository.getUsers().get(key));
     }
-
-    public User searchUser(String userId){
-        return  repository.getUser(userId);
+    public Long searchUser(String userId){
+        long exists = 0;
+        Integer key = 1;
+        while (key <= repository.getUsers().size() && exists == 0) {
+            if (userId.equals(repository.getUsers().get(key.longValue()).getUserId()))
+                exists = key.longValue();
+            key++;
+        }
+        return exists;
     }
 
     public User searchByUserName(String userName) {
         return repository.getByUserName(userName);
+    }
+
+    public void register(User user) {
+        repository.save(user);
     }
 }

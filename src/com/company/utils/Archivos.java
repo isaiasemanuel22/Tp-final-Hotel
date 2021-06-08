@@ -6,30 +6,28 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Archivos <T>{
+public class Archivos<T> {
     private String url;
 
-    public Archivos (String fileName){//Makes a directory if it doesn't exists and gives to url the file's url
+    public Archivos(String fileName) {//Makes a directory if it doesn't exists and gives to url the file's url
         File directory = new File(System.getProperty("user.dir") + "\\src\\", fileName);
 
-        if(!directory.exists() || !directory.isDirectory())
-            directory.mkdir();
+        if (!directory.exists() || !directory.isDirectory())
+            directory.mkdirs();
 
         url = directory.getAbsolutePath() + "\\" + fileName;
     }
 
-    public void save(ArrayList<T> c){
+    public void save(ArrayList<T> c) {
         File file = new File(url);
-        try
-        {
+        try {
             ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(file , c);
+            mapper.writeValue(file, c);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
     public ArrayList<T> read(Class<T> obj) throws IOException {
         ArrayList<T> list = new ArrayList<>();
@@ -43,5 +41,7 @@ public class Archivos <T>{
         return list;
     }
 
-    public boolean exists(){ return new File(url).exists(); }
+    public boolean exists() {
+        return new File(url).exists();
+    }
 }
