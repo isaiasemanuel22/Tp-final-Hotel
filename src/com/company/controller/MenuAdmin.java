@@ -56,8 +56,7 @@ public class MenuAdmin {
                     break;
                 default:
                     System.out.println("Ingrese una opcion correta!");
-                    Thread.sleep(3000);
-                    option = 1;
+                    Thread.sleep(2000);
             }
         } while (option > 0 && option < 7);
     }

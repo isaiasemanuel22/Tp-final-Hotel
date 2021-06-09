@@ -22,8 +22,7 @@ public class Session {
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
             System.out.println("" +
                     "\n1. Iniciar sesion."
-                    + "\n2. Registrarse"
-                    + "\n3. Salir"
+                    + "\n2. Salir"
             );
             option = Inputs.inputInterger();
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -31,19 +30,22 @@ public class Session {
             switch (option) {
                 case 1:
                     requestUser = signIn();
-                    option = 3;
+                    if(requestUser != null){
+                        option = 2;
+                    }
                     break;
                 case 2:
-                    userService.createUser(false);
-                    break;
-                case 3:
                     //This case does nothing :D, it serves to close the program.
+                    requestUser = null;
+                    break;
+                case 99:
+                    userService.createUser(true);
                     break;
                 default:
                     System.out.println("Ingrese una opcion correta!");
                     Thread.sleep(3000);
             }
-        }while (option != 3);
+        }while (option != 2);
 
         return requestUser;
     }
@@ -63,7 +65,6 @@ public class Session {
             }
         } else {
             System.out.println("\n El usuario no existe!");
-            Thread.sleep(3000);
         }
         return requestedUser;
     }

@@ -16,7 +16,7 @@ public class UserService {
     }
 
     public void addUser(User toAdd) throws IOException {
-        repository.getUsers().add(toAdd);
+        repository.save(toAdd);
     }
 
     public void saveAll(){
@@ -33,21 +33,15 @@ public class UserService {
                     + "\n Elige que tipo de usario: "
             );
 
-            option = new Inputs().inputInterger();
+            option = Inputs.inputInterger();
             switch (option) {
-                case 1:
-                    toReturn = UserType.ADMIN;
-                    break;
-                case 2:
-                    toReturn = UserType.PASAJERO;
-                    break;
-                case 3:
-                    toReturn = UserType.RECEPCIONISTA;
-                    break;
-                default:
+                case 1 -> toReturn = UserType.ADMIN;
+                case 2 -> toReturn = UserType.PASAJERO;
+                case 3 -> toReturn = UserType.RECEPCIONISTA;
+                default -> {
                     System.out.println(" Ingrese una opcion correta!");
                     Thread.sleep(3000);
-                    break;
+                }
             }
         } while (option > 3 || option < 1);
         return toReturn;
@@ -61,31 +55,31 @@ public class UserService {
             user.setUserType(UserType.PASAJERO);
 
         System.out.print(" Ingrese el nombre: ");
-        user.setName(new Inputs().inputString());
+        user.setName(Inputs.inputString());
 
         System.out.print("\n Ingrese el apellido: ");
-        user.setLastName(new Inputs().inputString());
+        user.setLastName(Inputs.inputString());
 
         System.out.print("\n Ingrese el DNI: ");
-        user.setDNI(new Inputs().inputString());
+        user.setDNI(Inputs.inputString());
 
         System.out.print("\n Ingrese la direccion: ");
-        user.setAdress(new Inputs().inputString());
+        user.setAdress(Inputs.inputString());
 
         System.out.print("\n Ingrese el telefono: ");
-        user.setPhone(new Inputs().inputString());
+        user.setPhone(Inputs.inputString());
 
         System.out.print("\n Ingrese el email: ");
-        user.setEmail(new Inputs().inputString());
+        user.setEmail(Inputs.inputString());
 
         System.out.print("\n Ingrese el genero: ");
-        user.setGenre(new Inputs().inputString());
+        user.setGenre(Inputs.inputString());
 
         System.out.print("\n Ingrese el nombre de usuario: ");
-        user.setUserName(new Inputs().inputString());
+        user.setUserName(Inputs.inputString());
 
         System.out.print("\n Ingrese la contraseña: ");
-        user.setPassword(new Inputs().inputString());
+        user.setPassword(Inputs.inputString());
 
         try {
             addUser(user);
@@ -177,6 +171,17 @@ public class UserService {
         return repository.getByUserName(userName);
     }
 
+    public void passenger(){
+        for (User aux: repository.getUsers()) {
+            if(aux.getUserType() == UserType.PASAJERO){
+                System.out.println(aux);
+            }
+        }
+    }
+
+    public void createPassenger(){
+
+    }
     /*public void register(User user) {
         repository.save(user);
     }*/

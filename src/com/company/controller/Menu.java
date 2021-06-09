@@ -38,7 +38,6 @@ public class Menu {
                     menu.mainMenu();
                 }
             }
-            userService.saveAll();
         }
     }
 }

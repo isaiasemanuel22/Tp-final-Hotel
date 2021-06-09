@@ -4,16 +4,24 @@ public class Room {
     private Type roomType;
     private String features;
     private int roomNumber;
+    private boolean available;
 
     public Room() {
     }
 
-    public Room(Type roomType, String features, int roomNumber) {
+    public Room(Type roomType, String features, int roomNumber , boolean available) {
         this.roomType = roomType;
         this.features = features;
         this.roomNumber = roomNumber;
     }
 
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
 
     public Type getRoomType() {
         return roomType;
@@ -37,6 +45,14 @@ public class Room {
         return "Room{" +
                 "roomTypeID=" + roomType +
                 ", features=" + features +
+                ", roomNumber=" + roomNumber +
+                '}';
+    }
+
+
+    public String room() {
+        return "Room{" +
+                "roomTypeID=" + roomType +
                 ", roomNumber=" + roomNumber +
                 '}';
     }
