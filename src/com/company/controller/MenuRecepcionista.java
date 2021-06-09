@@ -128,7 +128,7 @@ public class MenuRecepcionista {
                 System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
                 System.out.print("\n\n Ingrese el nombre de usuario a modificar: ");
                 User useSearch = userService.searchByUserName(Inputs.inputString());
-                if(useSearch.getUserType() == UserType.PASAJERO) {
+                if( useSearch.getUserType() == UserType.PASAJERO) {
                     userService.showUserDetails(useSearch);
                     System.out.print("0. salir");
                     System.out.print(" Ingrese el campo que quiera modificar: ");
