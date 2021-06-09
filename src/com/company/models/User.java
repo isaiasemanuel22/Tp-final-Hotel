@@ -5,9 +5,18 @@ public class User extends Person{
     private UserType userType;
     private String userName;
     private String password;
+    private Integer roomID;
 
     public User() {
 
+    }
+
+    public Integer getRoomID() {
+        return roomID;
+    }
+
+    public void setRoomID(Integer roomID) {
+        this.roomID = roomID;
     }
 
     public User(String userName) {
@@ -40,6 +49,7 @@ public class User extends Person{
                 +"UserType="+userType
                 +"UserName="+userName
                 +"Password=" +password
+                +"Habitacion="+roomID
                 +'}';
     }
 }

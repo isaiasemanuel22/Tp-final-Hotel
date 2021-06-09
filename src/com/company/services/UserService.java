@@ -80,7 +80,7 @@ public class UserService {
 
         System.out.print("\n Ingrese la contraseña: ");
         user.setPassword(Inputs.inputString());
-
+        user.setRoomID(0);
         try {
             addUser(user);
         } catch (Exception e) {
@@ -131,6 +131,8 @@ public class UserService {
                     user.ban();
                 break;
         };
+        repository.update(user);
+
     }
 
     public void showUserDetails(User user){
@@ -140,7 +142,7 @@ public class UserService {
         else
             status = "Activo";
 
-        System.out.println("\n 1. Tipo de usuario: "+user.getUserType()
+        System.out.println("\n\n 1. Tipo de usuario: "+user.getUserType()
                 +"\n 2. Nombre: "+user.getName()
                 +"\n 3. Apellido: "+user.getLastName()
                 +"\n 4. DNI: "+user.getDNI()
@@ -154,7 +156,7 @@ public class UserService {
     }
 
     private void showUsersOnSearch(User user){
-        System.out.println("\n Tipo de usuario: "+user.getUserType()
+        System.out.println("\n\n Tipo de usuario: "+user.getUserType()
                 +"\n Nombre de usuario: "+ user.getUserName()
                 +"\n Nombre: "+ user.getName()
                 +"\n Apellido: "+ user.getLastName()
@@ -167,6 +169,7 @@ public class UserService {
             showUsersOnSearch(aux);
     }
 
+
     public User searchByUserName(String userName) {
         return repository.getByUserName(userName);
     }
@@ -174,10 +177,38 @@ public class UserService {
     public void passenger(){
         for (User aux: repository.getUsers()) {
             if(aux.getUserType() == UserType.PASAJERO){
-                System.out.println(aux);
+                showUsersOnSearch(aux);
             }
         }
     }
+
+    public void passengerActivos(){
+        for (User aux: repository.getUsers()) {
+            if(aux.getUserType() == UserType.PASAJERO && aux.isBanned()){
+                showUserDetails(aux);
+            }
+        }
+    }
+
+
+
+    public void roomXPassenger(int room , User user){
+        user.setRoomID(room);
+        repository.update(user);
+    }
+
+    public void vacate(User user){
+        repository.update(user);
+    }
+
+    public void bannedPassenger(User user){
+        repository.update(user);
+    }
+
+    public User getUserByRoom(int room){
+        return repository.getUserByRoom(room);
+    }
+
 
     public void createPassenger(){
 

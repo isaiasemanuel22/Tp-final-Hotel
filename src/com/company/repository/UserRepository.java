@@ -1,6 +1,7 @@
 package com.company.repository;
 
 import com.company.models.User;
+import com.company.models.UserType;
 import com.company.utils.Archivos;
 
 import java.io.IOException;
@@ -49,6 +50,29 @@ public class UserRepository{
         for (User user : users)
             if(user.getUserName().equals(userName))
                 userSearch = user;
+        return userSearch;
+    }
+
+    public void update(User user){
+        for(int i = 0 ; i < users.size(); i++ ){
+            if(users.get(i).equals(user)){
+                users.remove(i);
+                users.add(i,user);
+                file.save(users);
+            }
+        }
+    }
+
+    public User getUserByRoom(int room){
+        User userSearch = null;
+        for (User user : users) {
+            if(user.getUserType() == UserType.PASAJERO){
+                if(user.getRoomID() == room){
+                    userSearch = user;
+                }
+            }
+
+        }
         return userSearch;
     }
 }

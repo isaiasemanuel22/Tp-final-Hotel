@@ -13,6 +13,7 @@ public class Room {
         this.roomType = roomType;
         this.features = features;
         this.roomNumber = roomNumber;
+        this.available = available;
     }
 
     public boolean isAvailable() {
@@ -51,12 +52,20 @@ public class Room {
 
 
     public String room() {
-        return "Room{" +
-                "roomTypeID=" + roomType +
-                ", roomNumber=" + roomNumber +
+        return "Habitacion: " + roomNumber +
+                ", Tipo de habitacion: " + roomType +
+                ", Ocupada: " + occuped() +
                 '}';
     }
 
+    public String occuped(){
+        if(available){
+            return "Desocupada";
+        }
+        else{
+            return "Ocupada";
+        }
+    }
     @Override
     public int hashCode() {
         return Integer.hashCode(this.roomNumber);

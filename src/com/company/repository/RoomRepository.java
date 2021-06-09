@@ -22,11 +22,36 @@ public class RoomRepository {
     }
 
     public boolean isAvailable(Integer roomNumber) {
-        return rooms.stream().anyMatch(room -> roomNumber.equals(room.getRoomNumber()));
+        for (Room room: rooms) {
+            if(room.getRoomNumber() == roomNumber){
+                return room.isAvailable();
+            }
+        }
+        return true;
     }
 
     public ArrayList<Room> getAll(){
         return this.rooms;
+    }
+
+    public Room getRoom(int roomID){
+        Room roomSearch = null;
+        for (Room room:rooms) {
+            if(room.getRoomNumber() == roomID){
+                roomSearch = room;
+            }
+        }
+        return roomSearch;
+    }
+
+    public void updateRoom(Room room){
+        for(int i = 0 ; i < rooms.size() ; i++){
+            if(rooms.get(i).getRoomNumber() == room.getRoomNumber()){
+                rooms.remove(rooms.get(i));
+                rooms.add(i , room);
+            }
+        }
+        archivos.save(rooms);
     }
 }
 

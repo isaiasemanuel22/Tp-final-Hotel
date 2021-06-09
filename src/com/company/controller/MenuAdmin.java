@@ -68,16 +68,17 @@ public class MenuAdmin {
             System.out.print("\n\n Ingrese el nombre de usuario a modificar: ");
             User userToUpdate = userService.searchByUserName(Inputs.inputString());
             userService.showUserDetails(userToUpdate);
+            System.out.print("0. salir");
             System.out.print(" Ingrese el campo que quiera modificar: ");
             option =Inputs.inputInterger();
 
-            if(option<1 || option>10) {
+            if(option<0 || option>10) {
                 System.out.println("\n Elija una opcion correcta!");
                 Thread.sleep(3000);
             }
             else
                 userService.updateUser(userToUpdate, option);
-        }while (option<1 || option>10);
+        }while (option != 0);
     }
 
     public void searchUser() throws IOException {
