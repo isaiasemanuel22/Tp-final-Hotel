@@ -1,18 +1,24 @@
 package com.company.controller;
 
 import com.company.models.Room;
+import com.company.models.RoomType;
 import com.company.models.User;
 import com.company.models.UserType;
 import com.company.services.RoomService;
+import com.company.services.RoomTypeService;
 import com.company.services.UserService;
 import com.company.utils.Inputs;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MenuRecepcionista {
     private User user;
     private UserService userService = new UserService();
     private RoomService roomService = new RoomService();
+    private RoomTypeService roomTypeService = new RoomTypeService();
     public MenuRecepcionista(User user) throws IOException {
         this.user = user;
     }
@@ -83,7 +89,7 @@ public class MenuRecepcionista {
             option = Inputs.inputInterger();
             switch (option) {
                 case 1:
-                    roomXpassenger();
+                    createReservation();
                     break;
                 case 2:
                     vacateRoomByUser();
@@ -104,13 +110,13 @@ public class MenuRecepcionista {
                     System.out.println("Ingrese una opcion correta!");
                     Thread.sleep(2000);
             }
-        } while (option > 0 && option < 6);
+        } while (option != 6);
     }
 
     public void roomXpassenger(){
         System.out.println("Nombre del pasajero: ");
         User useSearch = userService.searchByUserName(Inputs.inputString());
-        if(useSearch.getUserType() == UserType.PASAJERO){
+        if( useSearch!= null &&  useSearch.getUserType() == UserType.PASAJERO){
             roomService.showAvailableRooms();
             System.out.println("Indique la habitacion deseada: ");
             int room = Inputs.inputInterger();
@@ -122,7 +128,6 @@ public class MenuRecepcionista {
     }
 
     public void updatePassenger() throws InterruptedException {
-
             int option = 0;
             do {
                 System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
@@ -159,7 +164,6 @@ public class MenuRecepcionista {
     }
 
     public void bannedPassenger(boolean action){
-
         User useSearch = userService.searchByUserName(Inputs.inputString());
         if(useSearch!= null && useSearch.getUserType() == UserType.PASAJERO){
             if(action){
@@ -182,6 +186,97 @@ public class MenuRecepcionista {
             roomService.vacate(roomSearch.getRoomNumber());
         }
     }
+
+    public void createReservation(){
+        System.out.println("Nombre del pasajero: ");
+        User useSearch = userService.searchByUserName(Inputs.inputString());
+        if(useSearch!= null &&  useSearch.getUserType() == UserType.PASAJERO){
+            roomTypeService.showRoomTypes();
+            System.out.println("Seleccione un tipo de habitacion: ");
+            RoomType roomType = roomTypeService.getByIndex(Inputs.inputInterger());
+            roomService.showByTypeRoom(roomType);
+            Room roomSearch = null;
+            int room = 0;
+            do{
+                System.out.println("Numero de habitacion: ");
+                room = Inputs.inputInterger();
+                roomSearch = roomService.getByNum_TypeRoom(room ,roomType);
+                if(roomSearch == null){
+                    System.out.println("Ingrese una habitacion correspondiente");
+                    System.out.println("Enter para continuar / 0 para salir");
+                    room = Inputs.inputInterger();
+                }
+            }while (roomSearch == null || room != 0);
+            if(room != 0) {
+                System.out.println("Ingrese la fecha para reservar");
+                int year = anio();
+                int mont = month(year);
+                int day = day(mont, year);
+
+                LocalDate start = LocalDate.of(year, mont, day);
+
+                System.out.println("Cuentos dias desea quedarse?: ");
+
+                LocalDate end = start.plusDays(Inputs.inputInterger());
+
+            }
+        }
+    }
+
+    public int anio() {
+        int anio = 0;
+        boolean succefull = false;
+        do{
+            System.out.println("Ingrese anio ");
+            anio = Inputs.inputInterger();
+            if(anio >= LocalDate.now().getYear()){
+                succefull=true;
+            }
+
+        }while (!succefull);
+        return anio;
+    }
+    public int month(int anio) {
+        int month = 0;
+        boolean succefull = false;
+
+        do{
+            System.out.println("Ingrese mes ");
+            month = Inputs.inputInterger();
+            if(anio == LocalDate.now().getYear()){
+                if(month >= LocalDate.now().getMonthValue() + 1 && month < 13){
+                    succefull=true;
+                }
+            }
+            if(month > 0 && month < 13){
+                succefull=true;
+            }
+
+        }while (!succefull);
+        return month - 1;
+    }
+
+    public int day(int month , int anio) {
+        int day = 0;
+        boolean succefull = false;
+        do{
+            System.out.println("Ingrese mes ");
+            day = Inputs.inputInterger();
+            if(anio == LocalDate.now().getYear() && month == LocalDate.now().getMonthValue()){
+                if(day >= LocalDate.now().getDayOfMonth() && day <= LocalDate.now().lengthOfMonth()){ //fecha actual hasta fin de mes
+                    succefull = true;
+                }
+            }else {
+                LocalDate date = LocalDate.of(anio , month , 1);
+                if(day > 0 && day < date.lengthOfMonth()){  //todas las fechas de un mes
+                    succefull=true;
+                }
+            }
+        }while (!succefull);
+        return day;
+    }
+
+
 
 }
 

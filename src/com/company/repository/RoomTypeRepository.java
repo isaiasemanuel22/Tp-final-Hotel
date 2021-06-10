@@ -77,4 +77,8 @@ public class RoomTypeRepository {
         }
         return roomsType;
     }
+
+    public RoomType getRoomTypeByIndex(Integer inputInterger) {
+        return typeRooms.get(inputInterger);
+    }
 }

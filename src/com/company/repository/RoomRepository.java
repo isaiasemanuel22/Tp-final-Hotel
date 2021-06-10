@@ -1,6 +1,7 @@
 package com.company.repository;
 
 import com.company.models.Room;
+import com.company.models.RoomType;
 import com.company.utils.Archivos;
 
 import java.io.IOException;
@@ -52,6 +53,18 @@ public class RoomRepository {
             }
         }
         archivos.save(rooms);
+    }
+
+    public ArrayList<Room> getRoomsByTypeRoom(RoomType typeRoom) {
+        ArrayList<Room> roomsByType = new ArrayList<>();
+        for(Room roomSearch : rooms){
+            if(roomSearch.getRoomType() == typeRoom.getRoomType()){
+                if(roomSearch.isAvailable()){
+                    roomsByType.add(roomSearch);
+                }
+            }
+        }
+        return roomsByType;
     }
 }
 
