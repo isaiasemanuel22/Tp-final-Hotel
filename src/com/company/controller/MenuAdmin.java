@@ -28,7 +28,8 @@ public class MenuAdmin {
                     + "\n 4. Buscar usuario."
                     + "\n 5. Dar de baja un usuario."
                     + "\n 6. Dar de alta un usuario."
-                    + "\n 7. Cerrar sesion."
+                    + "\n 7. Habitaciones."
+                    + "\n 8. Cerrar sesion."
             );
 
             option = Inputs.inputInterger();
@@ -52,6 +53,9 @@ public class MenuAdmin {
                     unbanUser();
                     break;
                 case 7:
+                    new MenuRecepcionista(user).menuRooms();
+                    break;
+                case 8:
                     //This case does nothing :D, it serves to close the program.
                     break;
                 default:

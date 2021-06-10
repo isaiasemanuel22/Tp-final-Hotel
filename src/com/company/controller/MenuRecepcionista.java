@@ -74,10 +74,10 @@ public class MenuRecepcionista {
             System.out.println(
                     "\n\n 1. Asignar Pasajeros."
                     + "\n 2. Liberar Habitacion por Usuario."
-                    + "\n 3. Liberar Habitacin por numero de habitacion"
+                    + "\n 3. Liberar Habitacion por numero de habitacion."
                     + "\n 4. Ver Habitaciones libres."
                     + "\n 5. Ver todas las habitaciones."
-                    + "\n 6. Cerrar sesion."
+                    + "\n 6. Volver."
             );
 
             option = Inputs.inputInterger();
