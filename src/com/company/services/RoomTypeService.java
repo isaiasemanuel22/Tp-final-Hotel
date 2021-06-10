@@ -15,4 +15,15 @@ public class RoomTypeService {
     public RoomTypeService() throws IOException {
     }
 
+    public void showRoomTypes(){
+        int i = 1;
+        for(RoomType roomType : roomTypeRepository.getRoomTypes()){
+            System.out.println( i +". "+ roomType.toString());
+            i++;
+        }
+    }
+
+    public RoomType getByIndex(Integer inputInterger) {
+       return roomTypeRepository.getRoomTypeByIndex(inputInterger -1 );
+    }
 }

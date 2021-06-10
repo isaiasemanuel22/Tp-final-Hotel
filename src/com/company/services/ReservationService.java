@@ -8,15 +8,13 @@ import java.io.IOException;
 public class ReservationService {
 
 
-    private final ReservationRepository repository = new ReservationRepository();
+    private final ReservationRepository repository = ReservationRepository.getInstance();
 
 
-    public ReservationService() {
+    public ReservationService() throws IOException {
     }
 
     public void createReservation() {
-
-
 
     }
 }
