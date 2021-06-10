@@ -15,6 +15,7 @@ public class Menu {
     public void initProgram() throws IOException, InterruptedException {
         User userRequest = new User();
         do {
+            reservationService.updateRoomStatus();
             Session session = new Session();
             userRequest = session.mainMenu();
             view(userRequest);

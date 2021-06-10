@@ -12,9 +12,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class RoomService {
-    RoomRepository roomRepository = new RoomRepository();
+    RoomRepository roomRepository = RoomRepository.getInstance();
     RoomTypeRepository roomTypeRepository = RoomTypeRepository.getInstance();
-    ReservationService reservationService = new ReservationService();
 
     public RoomService() throws IOException {
         generateRooms();
@@ -67,15 +66,13 @@ public class RoomService {
     }
 
     public void occupyRoom(int room){
-        Room roomOccuped = roomRepository.getRoom(room);
-        roomOccuped.setAvailable(false);
-        roomRepository.updateRoom(roomOccuped);
+        roomRepository.getRoom(room).ocupped();
+        roomRepository.updateRoom(roomRepository.getRoom(room));
     }
 
     public void vacate(int room){
-        Room roomOccuped = roomRepository.getRoom(room);
-        roomOccuped.setAvailable(true);
-        roomRepository.updateRoom(roomOccuped);
+        roomRepository.getRoom(room).available();;
+        roomRepository.updateRoom(roomRepository.getRoom(room));
     }
 
     public void showRooms(){
@@ -84,36 +81,13 @@ public class RoomService {
         }
     }
 
-    public ArrayList<Integer> showRoomsAvailablesByDateAndType(LocalDate start, LocalDate end, Type roomType){
-        ArrayList<Integer> rooms = new ArrayList<>();
-        for (Room aux:roomRepository.getAll()) {
-            if (aux.getRoomType() == roomType && isAvailableDate(start, end, aux.getRoomNumber())) {
-                System.out.println(aux.room());
-                rooms.add(aux.getRoomNumber());
-            }
-        }
-        return rooms;
-    }
-
-    public boolean isAvailableDate(LocalDate start, LocalDate end, Integer room){
-        boolean isAvailable = true;
-        for (Reserva aux: reservationService.roomAllReservations(room)) {
-            if(aux.getRoom() == room)
-                for (int i=0; i<reservationService.getDays(aux); i++){
-                    if (aux.getStart().plusDays(i) == end.minusDays(1) || aux.getStart().plusDays(i) == start)
-                        isAvailable = false;
-                }
-        }
-        return isAvailable;
-    }
-
     public Room getRoom(int room){
        return roomRepository.getRoom(room);
     }
 
     public void showByTypeRoom(RoomType typeRoom){
         for(Room room: roomRepository.getRoomsByTypeRoom(typeRoom)){
-            System.out.println(room.room());
+            System.out.println(" "+room.room());
         }
 
     }
@@ -124,6 +98,10 @@ public class RoomService {
             return roomSearch;
         }
         return null;
+    }
+
+    public ArrayList<Room> getAllRooms(){
+        return roomRepository.getAll();
     }
 }
 

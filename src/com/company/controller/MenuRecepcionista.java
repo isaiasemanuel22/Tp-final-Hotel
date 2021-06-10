@@ -54,6 +54,7 @@ public class MenuRecepcionista {
                     break;
                 case 4:
                     menuRooms();
+                    break;
                 case 5:
                     bannedPassenger(true);
                     break;
@@ -77,7 +78,7 @@ public class MenuRecepcionista {
     public void menuRooms() throws InterruptedException {
         int option;
         do {
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
+            System.out.println("\n\n\n\n\n\n");
             System.out.println("HABITACIONES");
             System.out.println(
                     "\n\n 1. Asignar Pasajeros."
@@ -85,7 +86,8 @@ public class MenuRecepcionista {
                     + "\n 3. Liberar Habitacion por numero de habitacion."
                     + "\n 4. Ver Habitaciones libres."
                     + "\n 5. Ver todas las habitaciones."
-                    + "\n 6. Volver."
+                    + "\n 6. Ver reservas."
+                    + "\n 7. Volver."
             );
 
             option = Inputs.inputInterger();
@@ -106,13 +108,18 @@ public class MenuRecepcionista {
                     roomService.showRooms();
                     break;
                 case 6:
+                    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
+                    reservationService.showReservations();
+                    System.out.println("\n\n");
+                    break;
+                case 7:
                     //This case does nothing :D, it serves to close the program.
                     break;
                 default:
                     System.out.println("Ingrese una opcion correta!");
                     Thread.sleep(2000);
             }
-        } while (option != 6);
+        } while (option != 7);
     }
 
     public void roomXpassenger(){

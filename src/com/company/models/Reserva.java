@@ -5,11 +5,13 @@ import java.time.LocalDate;
 public class Reserva {
     private String passenger;
     private Integer room;
-    private LocalDate start;
-    private LocalDate end;
-    private Integer id;
+    private String start;
+    private String end;
 
-    public Reserva(String username , Integer room , LocalDate start ,LocalDate end){
+    public Reserva() {
+    }
+
+    public Reserva(String username , Integer room , String start , String end){
         this.passenger = username;
         this.room = room;
         this.start = start;
@@ -32,29 +34,29 @@ public class Reserva {
         this.room = room;
     }
 
-    public LocalDate getStart() {
+    public String getStart() {
         return start;
     }
 
-    public void setStart(LocalDate start) {
+    public void setStart(String start) {
         this.start = start;
     }
 
-    public LocalDate getEnd() {
+    public String getEnd() {
         return end;
     }
 
-    public void setEnd(LocalDate end) {
+    public void setEnd(String end) {
         this.end = end;
     }
 
     @Override
     public String toString() {
         return
-                '\n' + "Pasajero='" + passenger
-                +'\n' + "Habitacion='" + room
-                +'\n' + "Inicio='" + start
-                +'\n' + "Fin='" + end;
+                '\n' + "Pasajero: " + passenger
+                +'\n' + "Habitacion: " + room
+                +'\n' + "Fecha de entrada: " + start
+                +'\n' + "Fecha de salida: " + end;
 
     }
 }

@@ -9,12 +9,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class RoomRepository {
+    private static RoomRepository instance;
     Archivos<Room> archivos = new Archivos<>("Rooms");
     ArrayList<Room> rooms;
 
-    public  RoomRepository() throws IOException {
+    private RoomRepository() throws IOException {
         rooms =  archivos.read(Room.class);
 
+    }
+
+    public static RoomRepository getInstance() throws IOException {
+        if (instance == null)
+            instance = new RoomRepository();
+        return instance;
     }
 
     public void saveRooms(ArrayList<Room> rooms){

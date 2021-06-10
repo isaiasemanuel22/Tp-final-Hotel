@@ -18,7 +18,7 @@ public class RoomTypeService {
     public void showRoomTypes(){
         int i = 1;
         for(RoomType roomType : roomTypeRepository.getRoomTypes()){
-            System.out.println( i +". "+ roomType.toString());
+            System.out.println( "\n Pesione "+i+" para elejir\n"+ roomType.toString());
             i++;
         }
     }

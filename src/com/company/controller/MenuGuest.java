@@ -30,6 +30,7 @@ public class MenuGuest {
 
             switch (option){
                 case 1:
+
                     System.out.println("\nIngresa numero de habitacion");
                     Integer roomNumber = new Inputs().inputInterger();
                     boolean isAvailable = roomService.chekAvailability(roomNumber);
@@ -44,6 +45,8 @@ public class MenuGuest {
                         user.setDNI(new Inputs().inputString());
 
                         reservationService.createReservation();
+
+
                     }else {
                         System.out.println("\nLa habitacion no se encuentra disponible");
                     }

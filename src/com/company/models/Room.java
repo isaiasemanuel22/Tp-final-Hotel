@@ -20,9 +20,10 @@ public class Room {
         return available;
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public void available() {
+        this.available = true;
     }
+    public void ocupped() { this.available = false; }
 
     public Type getRoomType() {
         return roomType;
@@ -52,13 +53,12 @@ public class Room {
 
 
     public String room() {
-        return "Habitacion: " + roomNumber +
-                ", Tipo de habitacion: " + roomType +
-                ", Ocupada: " + occuped() +
-                '}';
+        return "\n Habitacion: " + roomNumber +
+                "\n Tipo de habitacion: " + roomType +
+                "\n Disponibilidad: " + queryOccuped();
     }
 
-    public String occuped(){
+    public String queryOccuped(){
         if(available){
             return "Desocupada";
         }
