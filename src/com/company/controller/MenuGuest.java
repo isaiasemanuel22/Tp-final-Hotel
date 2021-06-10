@@ -16,7 +16,7 @@ public class MenuGuest {
         this.user = user;
     }
 
-    public void mainMenu(){
+    public void mainMenu() throws InterruptedException {
         int option;
         do {
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");

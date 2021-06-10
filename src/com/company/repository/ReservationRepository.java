@@ -21,4 +21,8 @@ public class ReservationRepository {
         }
         return instance;
     }
+
+    public ArrayList<Reserva> getReservations() { return reservations; }
+
+    public void saveAll(){ archivos.save(reservations); }
 }

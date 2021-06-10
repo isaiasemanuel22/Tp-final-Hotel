@@ -22,7 +22,7 @@ public class RoomType {
 
     @Override
     public String toString() {
-        return "\n\n Tipo de habitacion: " + roomType
-               +"\n Precio : "+ price;
+        return "\n Tipo de habitacion: " + roomType
+               +"\n Precio : $"+ price;
     }
 }

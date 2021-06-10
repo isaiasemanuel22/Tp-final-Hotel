@@ -1,5 +1,6 @@
 package com.company.services;
 
+import com.company.models.Reserva;
 import com.company.models.Room;
 import com.company.models.RoomType;
 import com.company.models.Type;
@@ -7,11 +8,13 @@ import com.company.repository.RoomRepository;
 import com.company.repository.RoomTypeRepository;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class RoomService {
     RoomRepository roomRepository = new RoomRepository();
     RoomTypeRepository roomTypeRepository = RoomTypeRepository.getInstance();
+    ReservationService reservationService = new ReservationService();
 
     public RoomService() throws IOException {
         generateRooms();
@@ -79,6 +82,29 @@ public class RoomService {
         for(Room room : roomRepository.getAll()){
             System.out.println(room.room());
         }
+    }
+
+    public ArrayList<Integer> showRoomsAvailablesByDateAndType(LocalDate start, LocalDate end, Type roomType){
+        ArrayList<Integer> rooms = new ArrayList<>();
+        for (Room aux:roomRepository.getAll()) {
+            if (aux.getRoomType() == roomType && isAvailableDate(start, end, aux.getRoomNumber())) {
+                System.out.println(aux.room());
+                rooms.add(aux.getRoomNumber());
+            }
+        }
+        return rooms;
+    }
+
+    public boolean isAvailableDate(LocalDate start, LocalDate end, Integer room){
+        boolean isAvailable = true;
+        for (Reserva aux: reservationService.roomAllReservations(room)) {
+            if(aux.getRoom() == room)
+                for (int i=0; i<reservationService.getDays(aux); i++){
+                    if (aux.getStart().plusDays(i) == end.minusDays(1) || aux.getStart().plusDays(i) == start)
+                        isAvailable = false;
+                }
+        }
+        return isAvailable;
     }
 
     public Room getRoom(int room){
