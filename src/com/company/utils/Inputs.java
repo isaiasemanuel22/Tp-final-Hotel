@@ -84,7 +84,6 @@ public class Inputs <T>  {
 
             }
         }while (repeat);
-
         scan.nextLine();
         return entrada;
     }
