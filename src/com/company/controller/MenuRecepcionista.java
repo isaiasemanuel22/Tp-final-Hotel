@@ -93,7 +93,9 @@ public class MenuRecepcionista {
             option = Inputs.inputInterger();
             switch (option) {
                 case 1:
-                    reservationService.createReservation();
+                    System.out.print(" Ingrese el nombre de usuario del pasajero: ");
+                    User userSearch = userService.searchByUserName(Inputs.inputString());
+                    reservationService.createReservation(false, userSearch);
                     break;
                 case 2:
                     vacateRoomByUser();

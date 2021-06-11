@@ -20,12 +20,8 @@ public class ReservationService {
     public ReservationService() throws IOException {
     }
 
-
-    public void createReservation() throws InterruptedException {
-        System.out.print(" Nombre del pasajero: ");
-        User userSearch = userService.searchByUserName(Inputs.inputString());
+    public void createReservation(boolean isUser, User userSearch) throws InterruptedException {
         if(userSearch!= null &&  userSearch.getUserType() == UserType.PASAJERO){
-            System.out.println("Entra");
             roomTypeService.showRoomTypes();
             RoomType roomType = null;
             int roomTypeNum;
@@ -46,25 +42,28 @@ public class ReservationService {
             System.out.print(" Cuentos dias desea quedarse? ");
             LocalDate end = start.plusDays(Inputs.inputInterger());
             roomType = roomTypeService.getByIndex(roomTypeNum);
-            System.out.println("entro a rooms");
             ArrayList<Integer> roomsAvailables = showRoomsAvailablesByDateAndType(start, end, roomType.getRoomType());
-            System.out.println("salio a rooms");
             Room roomSearch = null;
-            do{
-                System.out.println("entro a do");
-                System.out.print("\n Numero de habitacion: ");
-                int room = Inputs.inputInterger();
-                System.out.println(room);
-                if (roomsAvailables.contains(room)) {
-                    System.out.println("entro");
-                    roomSearch = roomService.getByNum_TypeRoom(room, roomType);
-                    System.out.println("devolvio room");
-                }
-                else  {
-                    System.out.println("\n Ingrese una habitacion correcta!");
-                    Thread.sleep(3000);
-                }
-            }while (roomSearch == null);
+
+            if(!isUser) {
+                do {
+                    System.out.print("\n Numero de habitacion: ");
+                    int room = Inputs.inputInterger();
+                    System.out.println(room);
+                    if (roomsAvailables.contains(room))
+                        roomSearch = roomService.getByNum_TypeRoom(room, roomType);
+                    else {
+                        System.out.println("\n Ingrese una habitacion correcta!");
+                        Thread.sleep(3000);
+                    }
+                } while (roomSearch == null);
+            }
+            else if(!roomsAvailables.isEmpty())
+                roomSearch = roomService.getRoom(roomsAvailables.get(0));
+            else {
+                System.out.println("\n No hay habitaciones disponibles. Espere a que un recepcionista se la asigne!");
+                Thread.sleep(3000);
+            }
 
             repository.getReservations().add(new Reserva(userSearch.getUserName(), roomSearch.getRoomNumber(), start.toString(), end.toString()));
             saveAllReservations();
@@ -83,17 +82,32 @@ public class ReservationService {
         return rooms;
     }
 
+    /*
+    public boolean isAvailableDate(LocalDate start, LocalDate end, Integer room){
+        boolean isAvailable = true;
+        for (Reserva aux: roomAllReservations(room)) {
+            if(aux.getRoom() == room) {
+                for (int i = 0; i <= LocalDate.parse(aux.getStart()).compareTo(LocalDate.parse(aux.getEnd())); i++) {
+                    if (LocalDate.parse(aux.getStart()).plusDays(i) == end.minusDays(1) || LocalDate.parse(aux.getStart()).plusDays(i) == start)
+                        isAvailable = false;
+                }
+                if(LocalDate.parse(aux.getStart()).isAfter(start) && LocalDate.parse(aux.getEnd()).isBefore(end))
+                    isAvailable = false;
+            }
+        }
+        return isAvailable;
+    }                                   PEDORRADA BY OCTA XD
+    */
+
     public boolean isAvailableDate(LocalDate start, LocalDate end, Integer room){
         boolean isAvailable = true;
         for (Reserva aux: roomAllReservations(room)) {
             if(aux.getRoom().equals(room)){
-                System.out.println("entro al habitacion");
                 System.out.println(room);
                 if(  ! isAvailable(start , end , LocalDate.parse(aux.getStart()) , LocalDate.parse(aux.getEnd()))){
                     isAvailable = false;
                 }
             }
-            System.out.println("salio al for");
         }
         return isAvailable;
     }
@@ -226,5 +240,4 @@ public class ReservationService {
             System.out.println(aux.toString());
         }
     }
-
 }

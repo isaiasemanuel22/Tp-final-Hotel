@@ -30,26 +30,7 @@ public class MenuGuest {
 
             switch (option){
                 case 1:
-
-                    System.out.println("\nIngresa numero de habitacion");
-                    Integer roomNumber = new Inputs().inputInterger();
-                    boolean isAvailable = roomService.chekAvailability(roomNumber);
-                    if (isAvailable){
-                        System.out.print(" Ingrese el nombre: ");
-                        user.setUserName(new Inputs().inputString());
-
-                        System.out.print("\n Ingrese el apellido: ");
-                        user.setLastName(new Inputs().inputString());
-
-                        System.out.print("\n Ingrese el DNI: ");
-                        user.setDNI(new Inputs().inputString());
-
-                        reservationService.createReservation();
-
-
-                    }else {
-                        System.out.println("\nLa habitacion no se encuentra disponible");
-                    }
+                    reservationService.createReservation(true, user);
                     break;
                 case 2:
                     //This case does nothing :D, it serves to close the program.
