@@ -57,22 +57,33 @@ public class Inputs <T>  {
 
      public static String inputString(){
          String entrada = null;
-         try {
-             entrada = scan.nextLine();
-         }catch (Exception e){
-             scan.nextLine();
-         }
+         boolean repeat = true;
+        do{
+            try {
+                entrada = scan.nextLine();
+                repeat = false;
+            }catch (InputMismatchException e){
+                System.out.println("Ingrese una cadena de texto");
+                scan.nextLine();
+            }
+        }while (repeat);
+
          return entrada;
      }
 
     public static Integer inputInterger(){
         Integer entrada = null;
-        try {
-            entrada = scan.nextInt();;
-            System.out.println(entrada);
-        }catch (Exception e){
-            scan.nextLine();
-        }
+        boolean repeat = true;
+        do{
+            try {
+                entrada = scan.nextInt();
+                repeat = false;
+            }catch (InputMismatchException e){
+                System.out.println("Ingrese el valor numerico");
+                scan.nextLine();
+
+            }
+        }while (repeat);
 
         scan.nextLine();
         return entrada;

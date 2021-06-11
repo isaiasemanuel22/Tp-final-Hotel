@@ -37,4 +37,26 @@ public class ReservationRepository {
     }
 
     public void saveAll(){ archivos.save(reservations); }
+
+    public Reserva cancelReservation(String username){
+        Reserva reserva = null;
+        for(Reserva reservationSearch : reservations){
+            if(reservationSearch.getPassenger().equals(username) && reservationSearch.isActive()){
+                reserva.inactive();
+                reserva = reservationSearch;
+            }
+        }
+        saveAll();
+        return reserva;
+    }
+
+    public Reserva getReservationByUsername(String username){
+        Reserva reserva = null;
+        for(Reserva reservationSearch : reservations){
+            if(reservationSearch.getPassenger().equals(username) && reservationSearch.isActive()){
+                reserva = reservationSearch;
+            }
+        }
+        return reserva;
+    }
 }

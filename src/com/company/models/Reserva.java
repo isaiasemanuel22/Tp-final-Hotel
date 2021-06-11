@@ -65,13 +65,22 @@ public class Reserva {
         return active;
     }
 
+    public String status(){
+        if(active){
+            return "Activa";
+        }else{
+            return "Inactiva";
+        }
+    }
+
     @Override
     public String toString() {
         return
                 '\n' + "Pasajero: " + passenger
                 +'\n' + "Habitacion: " + room
                 +'\n' + "Fecha de entrada: " + start
-                +'\n' + "Fecha de salida: " + end;
+                +'\n' + "Fecha de salida: " + end
+                + '\n' + "Estado: " + status();
 
     }
 }

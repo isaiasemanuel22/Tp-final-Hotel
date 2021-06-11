@@ -22,51 +22,75 @@ public class ReservationService {
 
     public void createReservation(boolean isUser, User userSearch) throws InterruptedException {
         if(userSearch!= null &&  userSearch.getUserType() == UserType.PASAJERO){
-            roomTypeService.showRoomTypes();
-            RoomType roomType = null;
-            int roomTypeNum;
-            do {
-                System.out.print("\n Seleccione un tipo de habitacion: ");
-                roomTypeNum = Inputs.inputInterger();
-                if (roomTypeNum < 1 || roomTypeNum > 8) {
-                    System.out.println("\n Ingrese una tipo de habitacion correcta!");
-                    Thread.sleep(3000);
-                }
-            }while (roomTypeNum < 1 || roomTypeNum > 8);
+            if(repository.getReservationByUsername(userSearch.getUserName()) == null){
+                ArrayList<Integer> roomsAvailables = new ArrayList<>();
+                RoomType roomType = null;
+                Room room = null;
 
-            System.out.println("\n\n Ingrese la fecha para reservar");
-            int year = anio();
-            int mont = month(year);
-            int day = day(mont, year);
-            LocalDate start = LocalDate.of(year, mont, day);
-            System.out.print(" Cuentos dias desea quedarse? ");
-            LocalDate end = start.plusDays(Inputs.inputInterger());
-            roomType = roomTypeService.getByIndex(roomTypeNum);
-            ArrayList<Integer> roomsAvailables = showRoomsAvailablesByDateAndType(start, end, roomType.getRoomType());
-            Room roomSearch = null;
-            if(!isUser) {
+                LocalDate start = selectedDate();
+
+                System.out.print(" Cuentos dias desea quedarse? ");
+                LocalDate end = start.plusDays(Inputs.inputInterger());
+
                 do {
-                    System.out.print("\n Numero de habitacion: ");
-                    int room = Inputs.inputInterger();
-                    if (roomsAvailables.contains(room))
-                        roomSearch = roomService.getByNum_TypeRoom(room, roomType);
-                    else {
-                        System.out.println("\n Ingrese una habitacion correcta!");
-                        Thread.sleep(3000);
+                    roomTypeService.showRoomTypes();
+                    roomType = selectedRoomType();
+                    roomsAvailables = showRoomsAvailablesByDateAndType(start, end, roomType.getRoomType());
+                    if(roomsAvailables.isEmpty()) {
+                        System.out.println(" No hay habitacion disponibles , para este tipo de habitacion ");
                     }
-                } while (roomSearch == null);
+
+                }while (roomsAvailables.isEmpty());
+
+                room = selectedRoom(roomsAvailables , roomType);
+
+                repository.getReservations().add(new Reserva(userSearch.getUserName(), room.getRoomNumber(), start.toString(), end.toString()));
+                saveAllReservations();
+                roomService.updateRoomStatus();
+            }else{
+                System.out.println(" Ya posee una reserva pendiente ");
+                Thread.sleep(2000);
             }
-            else if(!roomsAvailables.isEmpty())
-                roomSearch = roomService.getRoom(roomsAvailables.get(0));
-            else {
-                System.out.println("\n No hay habitaciones disponibles. Espere a que un recepcionista se la asigne!");
+
+        }
+    }
+
+
+    public RoomType selectedRoomType() throws InterruptedException {
+        int roomTypeNum;
+        do {
+            System.out.print("\n Seleccione un tipo de habitacion: ");
+            roomTypeNum = Inputs.inputInterger();
+            if (roomTypeNum < 1 || roomTypeNum > 8) {
+                System.out.println("\n Ingrese una tipo de habitacion correcta!");
                 Thread.sleep(3000);
             }
+        }while (roomTypeNum < 1 || roomTypeNum > 8);
 
-            repository.getReservations().add(new Reserva(userSearch.getUserName(), roomSearch.getRoomNumber(), start.toString(), end.toString()));
-            saveAllReservations();
-            roomService.updateRoomStatus();
-        }
+        return roomTypeService.getByIndex(roomTypeNum);
+    }
+
+    public LocalDate selectedDate(){
+        System.out.println("\n\n Ingrese la fecha para reservar");
+        int year = anio();
+        int mont = month(year);
+        int day = day(mont, year);
+        return  LocalDate.of(year, mont, day);
+    }
+
+    public Room selectedRoom(ArrayList<Integer> roomsAvailables , RoomType roomType) throws InterruptedException {
+        Room roomSearch = null;
+        do {
+            System.out.print("\n Numero de habitacion: ");
+            int room = Inputs.inputInterger();
+            if (roomsAvailables.contains(room))
+                roomSearch = roomService.getByNum_TypeRoom(room, roomType);
+            else {
+                System.out.println("\n Ingrese una habitacion correcta!");
+                Thread.sleep(3000);
+            }
+        } while (roomSearch == null);
+        return roomSearch;
     }
 
     public ArrayList<Integer> showRoomsAvailablesByDateAndType(LocalDate start, LocalDate end, Type roomType){
@@ -245,12 +269,44 @@ public class ReservationService {
         }
     }
 
-    public void actullyReservations(){
-        for(Reserva reservation: repository.getActives()){
-            if(LocalDate.parse(reservation.getEnd()).isEqual(LocalDate.now())){
+
+
+    public void actullyReservations() {
+        for (Reserva reservation : repository.getActives()) {
+            if (LocalDate.parse(reservation.getEnd()).isEqual(LocalDate.now())) {
                 reservation.inactive();
             }
         }
         saveAllReservations();
+    }
+
+    public void showReservationByUser(String userName){
+        Reserva reserva = repository.getReservationByUsername(userName);
+        if(reserva != null){
+            System.out.println(reserva.toString());
+        }else{
+            System.out.println(" No posee reservas activas ");
+        }
+    }
+
+    public void cancelReservation(String username){
+        System.out.println(repository.getReservationByUsername(username).toString());
+        int option ;
+        boolean salir = false;
+        do {
+            System.out.println(" Esta por eliminar la reserva. ¿Esta seguro?.");
+            System.out.println(" 1. Si");
+            System.out.println(" 2. No");
+            option = Inputs.inputInterger();
+            switch (option) {
+                case 1 -> {
+                    System.out.println(repository.cancelReservation(username).toString());
+                    salir = true;
+                }
+                case 2 -> salir = true;
+                default -> System.out.println(" Ingrese una opcion correcta");
+            }
+        }while (!salir);
+
     }
 }
