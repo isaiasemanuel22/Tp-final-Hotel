@@ -44,12 +44,10 @@ public class ReservationService {
             roomType = roomTypeService.getByIndex(roomTypeNum);
             ArrayList<Integer> roomsAvailables = showRoomsAvailablesByDateAndType(start, end, roomType.getRoomType());
             Room roomSearch = null;
-
             if(!isUser) {
                 do {
                     System.out.print("\n Numero de habitacion: ");
                     int room = Inputs.inputInterger();
-                    System.out.println(room);
                     if (roomsAvailables.contains(room))
                         roomSearch = roomService.getByNum_TypeRoom(room, roomType);
                     else {
@@ -174,7 +172,6 @@ public class ReservationService {
             System.out.print("\n Ingrese año: ");
             anio = Inputs.inputInterger();
             if(anio >= LocalDate.now().getYear())
-                System.out.println("es este año");
                 succefull=true;
         }while (!succefull);
         return anio;
@@ -187,7 +184,6 @@ public class ReservationService {
             System.out.print(" Ingrese mes: ");
             month = Inputs.inputInterger();
             if(month == LocalDate.now().getMonthValue()){
-                System.out.println("es este mes");
                 if(month >= LocalDate.now().getMonthValue() && month < 13){
                     succefull=true;
                 }
@@ -209,19 +205,27 @@ public class ReservationService {
             System.out.println(month);
             System.out.println(LocalDate.now().getMonthValue());
             if(anio == LocalDate.now().getYear() && month == LocalDate.now().getMonthValue()){
-                System.out.println("este mes y anio");
-                if(day >= LocalDate.now().getDayOfMonth() && day <= LocalDate.now().lengthOfMonth()){ //fecha actual hasta fin de mes
-                    System.out.println(LocalDate.now().getDayOfMonth());
-                    System.out.println(LocalDate.now().lengthOfMonth());
-                    succefull = true;
+
+                if(day >= LocalDate.now().getDayOfMonth()){
+                    if(day <= LocalDate.now().lengthOfMonth()) { //fecha actual hasta fin de mes
+                        succefull = true;
+                    }else {
+                        System.out.println("El dia no puede ser superior a" + LocalDate.now().lengthOfMonth());
+                    }
                 }else{
-                    System.out.println("es menor a hoy");
+                    System.out.println("El dia no puede ser anterior a hoy");
                 }
             }else {
                 LocalDate date = LocalDate.of(anio , month , 1);
-                if(day > 0 && day < date.lengthOfMonth()) {  //todas las fechas de un mes
-                    succefull = true;
-                }
+                if(day > 0 ){
+                    if(day < date.lengthOfMonth()){
+                        succefull = true;
+                    }else {
+                        System.out.println("El dia no puede ser superior a: "  + date.lengthOfMonth());
+                    }
+                }else {
+                    System.out.println("El dia no puede ser menor a 0");
+                }//todas las fechas de un mes
             }
         }while (!succefull);
         return day;
@@ -239,5 +243,14 @@ public class ReservationService {
         for (Reserva aux: repository.getReservations()) {
             System.out.println(aux.toString());
         }
+    }
+
+    public void actullyReservations(){
+        for(Reserva reservation: repository.getActives()){
+            if(LocalDate.parse(reservation.getEnd()).isEqual(LocalDate.now())){
+                reservation.inactive();
+            }
+        }
+        saveAllReservations();
     }
 }

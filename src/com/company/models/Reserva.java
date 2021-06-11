@@ -7,6 +7,8 @@ public class Reserva {
     private Integer room;
     private String start;
     private String end;
+    private boolean active;
+
 
     public Reserva() {
     }
@@ -16,6 +18,7 @@ public class Reserva {
         this.room = room;
         this.start = start;
         this.end = end;
+        this.active = true;
     }
 
     public String getPassenger() {
@@ -48,6 +51,18 @@ public class Reserva {
 
     public void setEnd(String end) {
         this.end = end;
+    }
+
+    public void active(){
+        this.active = true;
+    }
+
+    public void inactive(){
+        this.active = false;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 
     @Override

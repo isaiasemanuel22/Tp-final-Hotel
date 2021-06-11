@@ -8,6 +8,7 @@ import com.company.repository.ReservationRepository;
 import com.company.repository.RoomRepository;
 import com.company.repository.RoomTypeRepository;
 
+import javax.security.auth.callback.LanguageCallback;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -109,15 +110,22 @@ public class RoomService {
 
     public void updateRoomStatus(){
         for (Reserva aux: reservationRepository.getReservations()) {
-            if (LocalDate.parse(aux.getStart()).equals(LocalDate.now())){
-                Room room = roomRepository.getRoom(aux.getRoom());
-                room.ocupped();
-                roomRepository.updateRoom(room);
+            LocalDate start = LocalDate.parse(aux.getStart());
+            LocalDate end = LocalDate.parse(aux.getEnd());
+            if (start.equals(LocalDate.now()) && aux.isActive()){
+                    Room room = roomRepository.getRoom(aux.getRoom());
+                    room.ocupped();
+                    roomRepository.updateRoom(room);
             }
-            if (LocalDate.parse(aux.getEnd()).equals(LocalDate.now())){
+            if (end.equals(LocalDate.now())){
                Room room =  roomRepository.getRoom(aux.getRoom());
                room.available();
                roomRepository.updateRoom(room);
+            }
+            if( start.isBefore(LocalDate.now()) && end.isAfter(LocalDate.now()) && !aux.isActive()){
+                Room room =  roomRepository.getRoom(aux.getRoom());
+                room.available();
+                roomRepository.updateRoom(room);
             }
         }
     }

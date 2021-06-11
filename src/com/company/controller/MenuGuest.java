@@ -26,7 +26,7 @@ public class MenuGuest {
                     + "\n2. Salir"
             );
 
-            option = new Inputs().inputInterger();
+            option = Inputs.inputInterger();
 
             switch (option){
                 case 1:
@@ -37,8 +37,8 @@ public class MenuGuest {
                     break;
                 default:
                     System.out.println("Ingrese una opcion correta!");
-                    option = 1;
+                    break;
             }
-        }while (option>0 && option<2);
+        }while (option!=2);
     }
 }

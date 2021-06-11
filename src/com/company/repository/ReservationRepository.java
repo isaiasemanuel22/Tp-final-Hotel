@@ -26,5 +26,15 @@ public class ReservationRepository {
 
     public ArrayList<Reserva> getReservations() { return reservations; }
 
+    public ArrayList<Reserva> getActives(){
+        ArrayList<Reserva> actives = new ArrayList<>();
+        for (Reserva reserva : reservations){
+            if(reserva.isActive()){
+                actives.add(reserva);
+            }
+        }
+        return actives;
+    }
+
     public void saveAll(){ archivos.save(reservations); }
 }
