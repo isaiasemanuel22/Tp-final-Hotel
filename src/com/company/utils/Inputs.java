@@ -69,6 +69,7 @@ public class Inputs <T>  {
         Integer entrada = null;
         try {
             entrada = scan.nextInt();;
+            System.out.println(entrada);
         }catch (Exception e){
             scan.nextLine();
         }

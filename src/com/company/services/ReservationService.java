@@ -8,10 +8,11 @@ import com.company.utils.Inputs;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ReservationService {
-    private ReservationRepository repository = new ReservationRepository();
+    private ReservationRepository repository = ReservationRepository.getInstance();
     private UserService userService = new UserService();
     private RoomTypeService roomTypeService = new RoomTypeService();
     private RoomService roomService = new RoomService();
@@ -45,15 +46,20 @@ public class ReservationService {
             System.out.print(" Cuentos dias desea quedarse? ");
             LocalDate end = start.plusDays(Inputs.inputInterger());
             roomType = roomTypeService.getByIndex(roomTypeNum);
-
+            System.out.println("entro a rooms");
             ArrayList<Integer> roomsAvailables = showRoomsAvailablesByDateAndType(start, end, roomType.getRoomType());
-
+            System.out.println("salio a rooms");
             Room roomSearch = null;
             do{
+                System.out.println("entro a do");
                 System.out.print("\n Numero de habitacion: ");
                 int room = Inputs.inputInterger();
-                if (roomsAvailables.contains(room))
+                System.out.println(room);
+                if (roomsAvailables.contains(room)) {
+                    System.out.println("entro");
                     roomSearch = roomService.getByNum_TypeRoom(room, roomType);
+                    System.out.println("devolvio room");
+                }
                 else  {
                     System.out.println("\n Ingrese una habitacion correcta!");
                     Thread.sleep(3000);
@@ -62,6 +68,7 @@ public class ReservationService {
 
             repository.getReservations().add(new Reserva(userSearch.getUserName(), roomSearch.getRoomNumber(), start.toString(), end.toString()));
             saveAllReservations();
+            roomService.updateRoomStatus();
         }
     }
 
@@ -79,25 +86,65 @@ public class ReservationService {
     public boolean isAvailableDate(LocalDate start, LocalDate end, Integer room){
         boolean isAvailable = true;
         for (Reserva aux: roomAllReservations(room)) {
-            if(aux.getRoom() == room)
-                for (int i=0; i<getDays(aux); i++){
-                    if (LocalDate.parse(aux.getStart()).plusDays(i) == end.minusDays(1) || LocalDate.parse(aux.getStart()).plusDays(i) == start)
-                        isAvailable = false;
+            if(aux.getRoom().equals(room)){
+                System.out.println("entro al habitacion");
+                System.out.println(room);
+                if(  ! isAvailable(start , end , LocalDate.parse(aux.getStart()) , LocalDate.parse(aux.getEnd()))){
+                    isAvailable = false;
                 }
+            }
+            System.out.println("salio al for");
         }
         return isAvailable;
     }
 
-    public int getDays(Reserva reserva){
-        int days=1;
-        LocalDate star = LocalDate.parse(reserva.getStart());
-        LocalDate end = LocalDate.parse(reserva.getEnd());
-        while(star != end){
-            star = star.plusDays(1);
-            days++;
-        }
-        return days;
+    public  boolean isAvailable (LocalDate start , LocalDate end , LocalDate auxStart , LocalDate auxEnd ){
+        return entreFechas(start,end,auxStart,auxEnd) &&
+                dentroDeReserva(start,end,auxStart,auxEnd) &&
+                fueraDeReserva(start,end,auxStart,auxEnd) &&
+                fechasIguales(start,end,auxStart,auxEnd);
     }
+
+    public boolean fechasIguales(LocalDate start , LocalDate end , LocalDate auxStart , LocalDate auxEnd ){
+        boolean available = false;
+        if( !auxStart.isEqual(start)){
+            if(!auxStart.isEqual(end)){
+                if(!auxEnd.isEqual(start)){
+                    if(!auxEnd.isEqual(end)){
+                        available = true;
+                    }
+                }
+            }
+        }
+        return available;
+
+    }
+    public boolean entreFechas (LocalDate start , LocalDate end , LocalDate auxStart , LocalDate auxEnd){
+        boolean available = false;
+        if(!(auxStart.isBefore(start) && auxEnd.isAfter(start))){
+            if(!(auxStart.isBefore(end)) && auxEnd.isAfter(end)){
+                available = true;
+            }
+        }
+        return available;
+    }
+
+    public boolean dentroDeReserva (LocalDate start , LocalDate end , LocalDate auxStart , LocalDate auxEnd ){
+        boolean available = false;
+        if( ! (auxStart.isBefore(start) && auxEnd.isAfter(end) )){
+            available = true;
+        }
+        return available;
+    }
+
+    public boolean fueraDeReserva (LocalDate start , LocalDate end , LocalDate auxStart , LocalDate auxEnd ){
+        boolean available = false;
+        if(! (auxStart.isAfter(start) && auxEnd.isBefore(end) )){
+            available = true;
+        }
+        return available;
+    }
+
     public ArrayList<Reserva> roomAllReservations(Integer room){
         ArrayList<Reserva> allReservations = new ArrayList<>();
         for (Reserva aux: repository.getReservations())
@@ -113,6 +160,7 @@ public class ReservationService {
             System.out.print("\n Ingrese año: ");
             anio = Inputs.inputInterger();
             if(anio >= LocalDate.now().getYear())
+                System.out.println("es este año");
                 succefull=true;
         }while (!succefull);
         return anio;
@@ -124,8 +172,9 @@ public class ReservationService {
         do{
             System.out.print(" Ingrese mes: ");
             month = Inputs.inputInterger();
-            if(anio == LocalDate.now().getYear()){
-                if(month >= LocalDate.now().getMonthValue() + 1 && month < 13){
+            if(month == LocalDate.now().getMonthValue()){
+                System.out.println("es este mes");
+                if(month >= LocalDate.now().getMonthValue() && month < 13){
                     succefull=true;
                 }
             }
@@ -134,7 +183,7 @@ public class ReservationService {
             }
 
         }while (!succefull);
-        return month - 1;
+        return month;
     }
 
     private int day(int month , int anio) {
@@ -143,14 +192,21 @@ public class ReservationService {
         do{
             System.out.print(" Ingrese dia: ");
             day = Inputs.inputInterger();
+            System.out.println(month);
+            System.out.println(LocalDate.now().getMonthValue());
             if(anio == LocalDate.now().getYear() && month == LocalDate.now().getMonthValue()){
+                System.out.println("este mes y anio");
                 if(day >= LocalDate.now().getDayOfMonth() && day <= LocalDate.now().lengthOfMonth()){ //fecha actual hasta fin de mes
+                    System.out.println(LocalDate.now().getDayOfMonth());
+                    System.out.println(LocalDate.now().lengthOfMonth());
                     succefull = true;
+                }else{
+                    System.out.println("es menor a hoy");
                 }
             }else {
                 LocalDate date = LocalDate.of(anio , month , 1);
-                if(day > 0 && day < date.lengthOfMonth()){  //todas las fechas de un mes
-                    succefull=true;
+                if(day > 0 && day < date.lengthOfMonth()) {  //todas las fechas de un mes
+                    succefull = true;
                 }
             }
         }while (!succefull);
@@ -171,12 +227,4 @@ public class ReservationService {
         }
     }
 
-    public void updateRoomStatus(){
-        for (Reserva aux: getAllReservations()) {
-            if (LocalDate.parse(aux.getStart()) == LocalDate.now())
-                roomService.getRoom(aux.getRoom()).ocupped();
-            if (LocalDate.parse(aux.getEnd()) == LocalDate.now())
-                roomService.getRoom(aux.getRoom()).available();
-        }
-    }
 }

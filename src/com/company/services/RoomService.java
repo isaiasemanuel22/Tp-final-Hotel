@@ -4,6 +4,7 @@ import com.company.models.Reserva;
 import com.company.models.Room;
 import com.company.models.RoomType;
 import com.company.models.Type;
+import com.company.repository.ReservationRepository;
 import com.company.repository.RoomRepository;
 import com.company.repository.RoomTypeRepository;
 
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 public class RoomService {
     RoomRepository roomRepository = RoomRepository.getInstance();
     RoomTypeRepository roomTypeRepository = RoomTypeRepository.getInstance();
+    ReservationRepository reservationRepository = ReservationRepository.getInstance();
 
     public RoomService() throws IOException {
         generateRooms();
@@ -102,6 +104,22 @@ public class RoomService {
 
     public ArrayList<Room> getAllRooms(){
         return roomRepository.getAll();
+    }
+
+
+    public void updateRoomStatus(){
+        for (Reserva aux: reservationRepository.getReservations()) {
+            if (LocalDate.parse(aux.getStart()).equals(LocalDate.now())){
+                Room room = roomRepository.getRoom(aux.getRoom());
+                room.ocupped();
+                roomRepository.updateRoom(room);
+            }
+            if (LocalDate.parse(aux.getEnd()).equals(LocalDate.now())){
+               Room room =  roomRepository.getRoom(aux.getRoom());
+               room.available();
+               roomRepository.updateRoom(room);
+            }
+        }
     }
 }
 

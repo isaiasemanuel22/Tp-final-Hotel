@@ -7,11 +7,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ReservationRepository {
+    private static ReservationRepository intance = null;
     private Archivos<Reserva> archivos = new Archivos<>("reservas");
     private ArrayList<Reserva> reservations = new ArrayList<>();
 
-    public ReservationRepository() throws IOException {
+
+
+    private  ReservationRepository() throws IOException {
         reservations = archivos.read(Reserva.class);
+    }
+
+    public static ReservationRepository getInstance() throws IOException {
+        if(intance == null){
+            intance = new ReservationRepository();
+        }
+        return intance;
     }
 
     public ArrayList<Reserva> getReservations() { return reservations; }
