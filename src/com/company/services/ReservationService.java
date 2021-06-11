@@ -240,4 +240,16 @@ public class ReservationService {
             System.out.println(aux.toString());
         }
     }
+
+    public void showReservationByUser(String userName){
+        boolean flag = false;
+        int i=0;
+        while (i<repository.getReservations().size() && !flag) {
+            if (userName.equals(repository.getReservations().get(i).getPassenger())) {
+                System.out.println(repository.getReservations().get(i).toString());
+                flag = true;
+            }
+            i++;
+        }
+    }
 }

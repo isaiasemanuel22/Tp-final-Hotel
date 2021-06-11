@@ -22,8 +22,9 @@ public class MenuGuest {
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
             System.out.println(" "+user.getUserType());
             System.out.println("\n Bienvenido " + user.getUserName()
-                    + "\n\n1. Realizar reserva"
-                    + "\n2. Salir"
+                    + "\n 1. Realizar reserva."
+                    + "\n 2. ver mi reserva."
+                    + "\n 3. Salir."
             );
 
             option = new Inputs().inputInterger();
@@ -33,12 +34,14 @@ public class MenuGuest {
                     reservationService.createReservation(true, user);
                     break;
                 case 2:
+                    reservationService.showReservationByUser(user.getUserName());
+                    break;
+                case 3:
                     //This case does nothing :D, it serves to close the program.
                     break;
                 default:
                     System.out.println("Ingrese una opcion correta!");
-                    option = 1;
             }
-        }while (option>0 && option<2);
+        }while (option != 3);
     }
 }
