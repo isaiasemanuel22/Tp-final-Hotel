@@ -1,6 +1,5 @@
 package com.company.services;
 
-import com.company.controller.Menu;
 import com.company.models.*;
 import com.company.repository.ReservationRepository;
 import com.company.utils.Inputs;
@@ -8,8 +7,6 @@ import com.company.utils.Inputs;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class ReservationService {
     private ReservationRepository repository = ReservationRepository.getInstance();
@@ -124,8 +121,7 @@ public class ReservationService {
     public boolean isAvailableDate(LocalDate start, LocalDate end, Integer room){
         boolean isAvailable = true;
         for (Reserva aux: roomAllReservations(room)) {
-            if(aux.getRoom().equals(room)){
-                System.out.println(room);
+            if(aux.getRoom().equals(room) && aux.isActive()){
                 if(  ! isAvailable(start , end , LocalDate.parse(aux.getStart()) , LocalDate.parse(aux.getEnd()))){
                     isAvailable = false;
                 }
@@ -226,8 +222,6 @@ public class ReservationService {
         do{
             System.out.print(" Ingrese dia: ");
             day = Inputs.inputInterger();
-            System.out.println(month);
-            System.out.println(LocalDate.now().getMonthValue());
             if(anio == LocalDate.now().getYear() && month == LocalDate.now().getMonthValue()){
 
                 if(day >= LocalDate.now().getDayOfMonth()){
@@ -280,33 +274,37 @@ public class ReservationService {
         saveAllReservations();
     }
 
-    public void showReservationByUser(String userName){
+    public void showReservationByUser(String userName) throws InterruptedException {
         Reserva reserva = repository.getReservationByUsername(userName);
         if(reserva != null){
             System.out.println(reserva.toString());
         }else{
-            System.out.println(" No posee reservas activas ");
+            System.out.println(" No posee una reserva Activa.");
+            Thread.sleep(3000);
         }
     }
 
-    public void cancelReservation(String username){
-        System.out.println(repository.getReservationByUsername(username).toString());
-        int option ;
-        boolean salir = false;
-        do {
-            System.out.println(" Esta por eliminar la reserva. ¿Esta seguro?.");
-            System.out.println(" 1. Si");
-            System.out.println(" 2. No");
-            option = Inputs.inputInterger();
-            switch (option) {
-                case 1 -> {
-                    System.out.println(repository.cancelReservation(username).toString());
-                    salir = true;
-                }
-                case 2 -> salir = true;
-                default -> System.out.println(" Ingrese una opcion correcta");
-            }
-        }while (!salir);
-
+    public Reserva getReservationByUser(String userName) throws InterruptedException {
+        return repository.getReservationByUsername(userName);
     }
+
+    public Reserva cancelReservation(String username){
+        Reserva reserva = null;
+        for(Reserva reservationSearch : repository.getReservations()){
+            if(reservationSearch.getPassenger().equals(username) && reservationSearch.isActive()){
+                reserva = reservationSearch;
+                reserva.inactive();
+                LocalDate start = LocalDate.parse(reserva.getStart());
+                LocalDate end = LocalDate.parse(reserva.getEnd());
+                if((start.isBefore(LocalDate.now()) || start.equals(LocalDate.now())) && (end.isAfter(LocalDate.now()) || end.minusDays(1).equals(LocalDate.now()))) {
+                    roomService.getRoom(reserva.getRoom()).available();
+                    System.out.println("\n Desocupa la habitacion " + reserva.getRoom());
+                    Inputs.inputInterger();
+                }
+            }
+        }
+        repository.saveAll();
+        return reserva;
+    }
+
 }

@@ -16,6 +16,10 @@ public class MenuAdmin {
         this.user = user;
     }
 
+    public MenuAdmin() throws IOException {
+
+    }
+
     public void mainMenu (User user) throws IOException, InterruptedException {
         int option;
         do {
@@ -61,9 +65,10 @@ public class MenuAdmin {
                 default:
                     System.out.println("Ingrese una opcion correta!");
                     Thread.sleep(2000);
+                    break;
             }
             userService.saveAll();
-        } while (option > 0 && option < 8);
+        } while (option != 8);
     }
 
     public void updateUser() throws InterruptedException, IOException {
@@ -108,7 +113,7 @@ public class MenuAdmin {
 
     public void banUser() throws InterruptedException {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
-        System.out.print("\n\n Ingrese la nombre de usuario: ");
+        System.out.print("\n\n Ingrese el nombre de usuario: ");
         User userToBan = userService.searchByUserName(Inputs.inputString());
         if(userToBan != null){
             System.out.println(" El usuario a sido dado de baja");
@@ -121,7 +126,7 @@ public class MenuAdmin {
 
     public void unbanUser() throws InterruptedException {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
-        System.out.print("\n\n Ingrese la nombre de usuario: ");
+        System.out.print("\n\n Ingrese el nombre de usuario: ");
         User userToBan = userService.searchByUserName(Inputs.inputString());
         if(userToBan != null){
             System.out.println(" El usuario a sido dado de alta");

@@ -21,6 +21,7 @@ public class MenuRecepcionista {
     private RoomService roomService = new RoomService();
     private RoomTypeService roomTypeService = new RoomTypeService();
     private ReservationService reservationService = new ReservationService();
+    private MenuAdmin menuAdmin = new MenuAdmin();
     public MenuRecepcionista(User user) throws IOException {
         this.user = user;
     }
@@ -37,7 +38,6 @@ public class MenuRecepcionista {
                     + "\n 4. Habitaciones."
                     + "\n 5. Dar de baja un pasajero"
                     + "\n 6. Dar de alta un pasajero."
-                    + "\n 7. Mostrar Pasajeros Activos."
                     + "\n 8. Cerrar sesion."
             );
 
@@ -56,22 +56,19 @@ public class MenuRecepcionista {
                     menuRooms();
                     break;
                 case 5:
-                    bannedPassenger(true);
+                    menuAdmin.banUser();
                     break;
                 case 6:
-                    bannedPassenger(false);
+                    menuAdmin.unbanUser();
                     break;
                 case 7:
-                    userService.passengerActivos();
-                    break;
-                case 8:
                     //This case does nothing :D, it serves to close the program.
                     break;
                 default:
                     System.out.println("Ingrese una opcion correta!");
                     Thread.sleep(2000);
             }
-        } while (option > 0 && option < 8);
+        } while (option > 0 && option < 7);
     }
 
 
@@ -178,19 +175,6 @@ public class MenuRecepcionista {
         }
     }
 
-    public void bannedPassenger(boolean action){
-        User useSearch = userService.searchByUserName(Inputs.inputString());
-        if(useSearch!= null && useSearch.getUserType() == UserType.PASAJERO){
-            if(action){
-                useSearch.ban();
-            }
-            else{
-                useSearch.unban();
-            }
-            userService.bannedPassenger(useSearch);
-        }
-    }
-
     public void vacateRoomByRoom(){
         System.out.print(" Numero de habitacion: ");
         Room roomSearch = roomService.getRoom(Inputs.inputInterger());
@@ -200,10 +184,5 @@ public class MenuRecepcionista {
             roomService.vacate(roomSearch.getRoomNumber());
         }
     }
-
-
-
-
-
 }
 

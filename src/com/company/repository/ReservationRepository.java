@@ -1,17 +1,17 @@
 package com.company.repository;
 
 import com.company.models.Reserva;
+import com.company.services.RoomService;
 import com.company.utils.Archivos;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ReservationRepository {
     private static ReservationRepository intance = null;
     private Archivos<Reserva> archivos = new Archivos<>("reservas");
     private ArrayList<Reserva> reservations = new ArrayList<>();
-
-
 
     private  ReservationRepository() throws IOException {
         reservations = archivos.read(Reserva.class);
@@ -37,18 +37,6 @@ public class ReservationRepository {
     }
 
     public void saveAll(){ archivos.save(reservations); }
-
-    public Reserva cancelReservation(String username){
-        Reserva reserva = null;
-        for(Reserva reservationSearch : reservations){
-            if(reservationSearch.getPassenger().equals(username) && reservationSearch.isActive()){
-                reserva.inactive();
-                reserva = reservationSearch;
-            }
-        }
-        saveAll();
-        return reserva;
-    }
 
     public Reserva getReservationByUsername(String username){
         Reserva reserva = null;

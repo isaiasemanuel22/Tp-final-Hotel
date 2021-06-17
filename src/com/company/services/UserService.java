@@ -176,20 +176,10 @@ public class UserService {
     public void passenger(){
         for (User aux: repository.getUsers()) {
             if(aux.getUserType() == UserType.PASAJERO){
-                showUsersOnSearch(aux);
-            }
-        }
-    }
-
-    public void passengerActivos(){
-        for (User aux: repository.getUsers()) {
-            if(aux.getUserType() == UserType.PASAJERO && aux.isBanned()){
                 showUserDetails(aux);
             }
         }
     }
-
-
 
     public void roomXPassenger(int room , User user){
         user.setRoomID(room);

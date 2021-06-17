@@ -76,11 +76,11 @@ public class Reserva {
     @Override
     public String toString() {
         return
-                '\n' + "Pasajero: " + passenger
-                +'\n' + "Habitacion: " + room
-                +'\n' + "Fecha de entrada: " + start
-                +'\n' + "Fecha de salida: " + end
-                + '\n' + "Estado: " + status();
+                '\n' + " Pasajero: " + passenger
+                +'\n' + " Habitacion: " + room
+                +'\n' + " Fecha de entrada: " + start
+                +'\n' + " Fecha de salida: " + end
+                + '\n' + " Estado: " + status();
 
     }
 }
