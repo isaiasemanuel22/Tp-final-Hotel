@@ -7,6 +7,8 @@ public class Reserva {
     private Integer room;
     private String start;
     private String end;
+    private boolean active;
+
 
     public Reserva() {
     }
@@ -16,6 +18,7 @@ public class Reserva {
         this.room = room;
         this.start = start;
         this.end = end;
+        this.active = true;
     }
 
     public String getPassenger() {
@@ -50,13 +53,34 @@ public class Reserva {
         this.end = end;
     }
 
+    public void active(){
+        this.active = true;
+    }
+
+    public void inactive(){
+        this.active = false;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public String status(){
+        if(active){
+            return "Activa";
+        }else{
+            return "Inactiva";
+        }
+    }
+
     @Override
     public String toString() {
         return
                 '\n' + "Pasajero: " + passenger
                 +'\n' + "Habitacion: " + room
                 +'\n' + "Fecha de entrada: " + start
-                +'\n' + "Fecha de salida: " + end;
+                +'\n' + "Fecha de salida: " + end
+                + '\n' + "Estado: " + status();
 
     }
 }

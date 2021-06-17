@@ -27,7 +27,7 @@ public class MenuGuest {
                     + "\n 3. Salir."
             );
 
-            option = new Inputs().inputInterger();
+            option = Inputs.inputInterger();
 
             switch (option){
                 case 1:
@@ -37,11 +37,17 @@ public class MenuGuest {
                     reservationService.showReservationByUser(user.getUserName());
                     break;
                 case 3:
-                    //This case does nothing :D, it serves to close the program.
+                    reservationService.cancelReservation(user.getUserName());
+                    break;
+                case 4:
+                    //salir
                     break;
                 default:
                     System.out.println("Ingrese una opcion correta!");
+                    Thread.sleep(2000);
+                    break;
+
             }
-        }while (option != 3);
+        }while (option != 4);
     }
 }

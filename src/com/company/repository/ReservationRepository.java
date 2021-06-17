@@ -26,5 +26,37 @@ public class ReservationRepository {
 
     public ArrayList<Reserva> getReservations() { return reservations; }
 
+    public ArrayList<Reserva> getActives(){
+        ArrayList<Reserva> actives = new ArrayList<>();
+        for (Reserva reserva : reservations){
+            if(reserva.isActive()){
+                actives.add(reserva);
+            }
+        }
+        return actives;
+    }
+
     public void saveAll(){ archivos.save(reservations); }
+
+    public Reserva cancelReservation(String username){
+        Reserva reserva = null;
+        for(Reserva reservationSearch : reservations){
+            if(reservationSearch.getPassenger().equals(username) && reservationSearch.isActive()){
+                reserva.inactive();
+                reserva = reservationSearch;
+            }
+        }
+        saveAll();
+        return reserva;
+    }
+
+    public Reserva getReservationByUsername(String username){
+        Reserva reserva = null;
+        for(Reserva reservationSearch : reservations){
+            if(reservationSearch.getPassenger().equals(username) && reservationSearch.isActive()){
+                reserva = reservationSearch;
+            }
+        }
+        return reserva;
+    }
 }
