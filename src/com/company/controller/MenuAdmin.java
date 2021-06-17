@@ -62,48 +62,73 @@ public class MenuAdmin {
                     System.out.println("Ingrese una opcion correta!");
                     Thread.sleep(2000);
             }
-        } while (option > 0 && option < 7);
+            userService.saveAll();
+        } while (option > 0 && option < 8);
     }
 
     public void updateUser() throws InterruptedException, IOException {
-        int option;
-        do {
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
-            System.out.print("\n\n Ingrese el nombre de usuario a modificar: ");
-            User userToUpdate = userService.searchByUserName(Inputs.inputString());
-            userService.showUserDetails(userToUpdate);
-            System.out.print("0. salir");
-            System.out.print(" Ingrese el campo que quiera modificar: ");
-            option =Inputs.inputInterger();
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
+        System.out.print("\n\n Ingrese el nombre de usuario a modificar: ");
+        User userToUpdate = userService.searchByUserName(Inputs.inputString());
 
-            if(option<0 || option>10) {
-                System.out.println("\n Elija una opcion correcta!");
-                Thread.sleep(3000);
-            }
-            else
-                userService.updateUser(userToUpdate, option);
-        }while (option != 0);
+        if(userToUpdate != null) {
+            int option;
+            do {
+                userService.showUserDetails(userToUpdate);
+                System.out.println(" 0. salir");
+                System.out.print(" Ingrese el campo que quiera modificar: ");
+                option = Inputs.inputInterger();
+
+                if (option < 0 || option > 10) {
+                    System.out.println("\n Elija una opcion correcta!");
+                    Thread.sleep(3000);
+                } else {
+                    userService.updateUser(userToUpdate, option);
+                    option = 0;
+                }
+            } while (option != 0);
+        }
+        else {
+            System.out.println("\n El usuario no existe! Por favor ingrese uno nuevamente.");
+            Thread.sleep(3000);
+        }
     }
 
-    public void searchUser() throws IOException {
+    public void searchUser() throws IOException, InterruptedException {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
         System.out.print("\n\n Ingrese la nombre de usuario: ");
-        userService.showUserDetails(userService.searchByUserName(Inputs.inputString()));
+        User userToShow = userService.searchByUserName(Inputs.inputString());
+        if(userToShow != null){
+            userService.showUserDetails(userToShow);
+        }
+        else
+            System.out.println(" El usuario no existe");
+        Thread.sleep(3000);
     }
 
     public void banUser() throws InterruptedException {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
         System.out.print("\n\n Ingrese la nombre de usuario: ");
-        userService.searchByUserName(Inputs.inputString()).ban();
-        System.out.println(" El usuario a sido dado de baja");
+        User userToBan = userService.searchByUserName(Inputs.inputString());
+        if(userToBan != null){
+            System.out.println(" El usuario a sido dado de baja");
+            userToBan.ban();
+        }
+        else
+            System.out.println(" El usuario no existe");
         Thread.sleep(3000);
     }
 
     public void unbanUser() throws InterruptedException {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
         System.out.print("\n\n Ingrese la nombre de usuario: ");
-        userService.searchByUserName(Inputs.inputString()).unban();
-        System.out.println(" El usuario a sido dado de alta");
+        User userToBan = userService.searchByUserName(Inputs.inputString());
+        if(userToBan != null){
+            System.out.println(" El usuario a sido dado de alta");
+            userToBan.unban();
+        }
+        else
+            System.out.println(" El usuario no existe");
         Thread.sleep(3000);
     }
 }

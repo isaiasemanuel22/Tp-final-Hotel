@@ -85,9 +85,10 @@ public class MenuRecepcionista {
                     + "\n 2. Liberar Habitacion por Usuario."
                     + "\n 3. Liberar Habitacion por numero de habitacion."
                     + "\n 4. Ver Habitaciones libres."
-                    + "\n 5. Ver todas las habitaciones."
-                    + "\n 6. Ver reservas."
-                    + "\n 7. Volver."
+                    + "\n 5. Ver Habitaciones ocupadas."
+                    + "\n 6. Ver todas las habitaciones."
+                    + "\n 7. Ver reservas."
+                    + "\n 8. Volver."
             );
 
             option = Inputs.inputInterger();
@@ -107,21 +108,24 @@ public class MenuRecepcionista {
                     roomService.showAvailableRooms();
                     break;
                 case 5:
-                    roomService.showRooms();
+                    roomService.showUnavailableRooms();
                     break;
                 case 6:
+                    roomService.showRooms();
+                    break;
+                case 7:
                     System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
                     reservationService.showReservations();
                     System.out.println("\n\n");
                     break;
-                case 7:
+                case 8:
                     //This case does nothing :D, it serves to close the program.
                     break;
                 default:
                     System.out.println("Ingrese una opcion correta!");
                     Thread.sleep(2000);
             }
-        } while (option != 7);
+        } while (option != 8);
     }
 
     public void roomXpassenger(){
@@ -188,11 +192,10 @@ public class MenuRecepcionista {
     }
 
     public void vacateRoomByRoom(){
-        System.out.println("Numero de habitacion: ");
+        System.out.print(" Numero de habitacion: ");
         Room roomSearch = roomService.getRoom(Inputs.inputInterger());
         if(roomSearch!= null &&  !roomSearch.isAvailable()){
             User usersearch = userService.getUserByRoom(roomSearch.getRoomNumber());
-            usersearch.setRoomID(0);
             userService.vacate(usersearch);
             roomService.vacate(roomSearch.getRoomNumber());
         }

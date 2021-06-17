@@ -18,7 +18,14 @@ public class Menu {
         do {
             Session session = new Session();
             userRequest = session.mainMenu();
-            view(userRequest);
+            if(userRequest != null) {
+                if (!userRequest.isBanned())
+                    view(userRequest);
+                else {
+                    System.out.println("\n El usuario esta baneado!");
+                    Thread.sleep(3000);
+                }
+            }
         }while (userRequest != null);
 
     }

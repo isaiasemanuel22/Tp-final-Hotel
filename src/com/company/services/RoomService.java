@@ -67,6 +67,15 @@ public class RoomService {
         }
     }
 
+    public void showUnavailableRooms(){
+        for(Room room : roomRepository.getAll()){
+            if(!room.isAvailable()){
+                System.out.println(room.room());
+            }
+        }
+    }
+
+
     public void occupyRoom(int room){
         roomRepository.getRoom(room).ocupped();
         roomRepository.updateRoom(roomRepository.getRoom(room));

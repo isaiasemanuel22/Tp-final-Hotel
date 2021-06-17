@@ -132,7 +132,6 @@ public class UserService {
                 break;
         };
         repository.update(user);
-
     }
 
     public void showUserDetails(User user){

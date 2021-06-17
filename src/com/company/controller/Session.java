@@ -62,9 +62,11 @@ public class Session {
             if (!inputPassword.equals(requestedUser.getPassword())) {
                 System.out.println(" Contraseña Incorrecta!");
                 requestedUser = null;
+                Thread.sleep(3000);
             }
         } else {
             System.out.println("\n El usuario no existe!");
+            Thread.sleep(3000);
         }
         return requestedUser;
     }
